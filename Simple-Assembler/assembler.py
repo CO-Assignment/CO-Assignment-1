@@ -1,4 +1,7 @@
 instructions = []
+
+print("helo helo")
+
 while True:
     inst = input()
     if(inst==""):
