@@ -23,19 +23,30 @@ opcodes = {
     }
 # op code checked and are correct
 
-r0 = [0]*16
-r1 = [0]*16
-r2 = [0]*16
-r3 = [0]*16
-r4 = [0]*16
-r5 = [0]*16
-r6 = [0]*16
-flags = [0]*4
+# r0 = [0]*16
+# r1 = [0]*16
+# r2 = [0]*16
+# r3 = [0]*16
+# r4 = [0]*16
+# r5 = [0]*16
+# r6 = [0]*16
+
+registers = [0]*7
+flags = [False]*4
 labels = {}
 memory = []
 for i in range(256):
     memory.append([0,0])
 
+def convertToBin(numToCovert, noOfBits):
+    ans = ""
+    while numToCovert>1:
+        ans = str(numToCovert%2)+ans
+        numToCovert = int(numToCovert/2)
+    ans = "1"+ans
+    bitsLeft = noOfBits - len(ans)
+    ans = ("0"*bitsLeft) + ans
+    return ans
 
 
 def convertToDecimal(bin_str):
@@ -57,7 +68,7 @@ varsDone = False
 while True:
     # print(instructions)
     # print(labels)
-    inst = input()
+    inst = input().strip()
     if len(instructions)==256:
         raise Exception("Memory overflow! 256 lines limit has been reached!")
     
@@ -86,11 +97,47 @@ while True:
 def TypeA(inst):
     toRet = ""
     partWise = inst.split()
+    # print(partWise)
     toRet+=opcodes[partWise[0]]
+    toRet +="00"
+    if len(partWise)>3:
+        regNo1 = int(partWise[2][-1:])
+        regNo2 = int(partWise[3][-1:])
+        resultRegNo = int(partWise[1][-1])
+        toRet+=convertToBin(resultRegNo,3)
+        toRet+=convertToBin(regNo1,3)
+        toRet+=convertToBin(regNo2,3)
+        operand1 = registers[regNo1]
+        operand2 = registers[regNo2]
+        result = 0
+
+        # OVERFLOW(fr add and mul only) AND ERRORS YET TO BE HANDLED
+        if(partWise[0]=="add"):
+            result = operand1+operand2
+        elif partWise[0]=="sub":
+            result = operand1-operand2
+            if(result<0):
+                result = 0
+                flags[0]= True
+        elif partWise[0]=="mul":
+            result = operand1*operand2
+        elif partWise[0]=="xor":
+            result = operand1^operand2
+        elif partWise[0]=="or":
+            result = operand1 | operand2
+        elif partWise[0]=="and":
+            result = operand1 & operand2
+        registers[resultRegNo]=result
     return toRet
 
 for i in instructions:
-    print(TypeA(i))
+    curOp = i.split()[0]
+    
+    if(curOp=="add" or curOp=="sub" or curOp=="mul" or curOp=="xor" or curOp=="or" or curOp=="and"):
+        print(TypeA(i))
+    elif(curOp=="hlt"):
+        print(opcodes[curOp]+("0"*11))
+    
 
 
 
