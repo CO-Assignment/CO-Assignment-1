@@ -21,7 +21,7 @@ opcodes = {
     "je":"10010",
     "hlt":"10011"
     }
-# mov not added due to conlict
+# op code checked and are correct
 
 r0 = [0]*16
 r1 = [0]*16
