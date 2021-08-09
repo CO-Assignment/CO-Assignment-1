@@ -73,5 +73,5 @@ while True:
     if inst=="hlt":
         break
     
-
+#code checked today working perfectly as expected
        
