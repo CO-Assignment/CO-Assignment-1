@@ -56,7 +56,7 @@ varsDone = False
 while True:
     
     inst = input()
-    if len(instructions)==256:
+    if len(instructions)==0:
         raise Exception("Memory overflow! 256 lines limit has been reached!")
     
     if(varsDone==False and inst[0:3]!="var"):
