@@ -31,6 +31,7 @@ r4 = [0]*16
 r5 = [0]*16
 r6 = [0]*16
 flags = [0]*4
+labels = {}
 memory = []
 for i in range(256):
     memory.append([0,0])
@@ -54,11 +55,19 @@ def convertToDecimal(bin_str):
 varsDone = False
 
 while True:
-    
+    print(instructions)
+    print(labels)
     inst = input()
-    if len(instructions)==0:
+    if len(instructions)==256:
         raise Exception("Memory overflow! 256 lines limit has been reached!")
     
+    if ":" in inst:
+        lineNo = len(instructions)
+        indexToSplit = inst.index(":")
+        labels[inst[0:indexToSplit]]=lineNo
+        instructions.append(inst.split(":")[1].strip())
+        continue
+
     if(varsDone==False and inst[0:3]!="var"):
         
         varsDone = True
