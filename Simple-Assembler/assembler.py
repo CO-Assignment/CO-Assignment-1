@@ -55,8 +55,8 @@ def convertToDecimal(bin_str):
 varsDone = False
 
 while True:
-    print(instructions)
-    print(labels)
+    # print(instructions)
+    # print(labels)
     inst = input()
     if len(instructions)==256:
         raise Exception("Memory overflow! 256 lines limit has been reached!")
@@ -82,5 +82,17 @@ while True:
     if inst=="hlt":
         break
     
+
+def TypeA(inst):
+    toRet = ""
+    partWise = inst.split()
+    toRet+=opcodes[partWise[0]]
+    return toRet
+
+for i in instructions:
+    print(TypeA(i))
+
+
+
 #code checked today working perfectly as expected
        
