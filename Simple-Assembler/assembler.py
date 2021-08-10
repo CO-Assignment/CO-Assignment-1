@@ -145,6 +145,21 @@ def TypeA(inst):
         registers[resultRegNo]=result
     return toRet
 
+
+
+def TypeB(inst):
+    pass
+
+def TypeC(inst):
+    pass
+
+def TypeD(inst):
+    pass
+
+def TypeE(inst):
+    pass
+
+
 for j in range(len(instructions)):
     currFlagState = flags.copy
     flags = [False]*4
@@ -153,6 +168,8 @@ for j in range(len(instructions)):
     
     if(curOp=="add" or curOp=="sub" or curOp=="mul" or curOp=="xor" or curOp=="or" or curOp=="and"):
         print(TypeA(i))
+    elif (curOp=="ld" or curOp=="st"):
+        print(TypeD(i))
     elif(curOp=="hlt"):
         print(opcodes[curOp]+("0"*11))
     
