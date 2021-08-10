@@ -45,7 +45,8 @@ def convertToBin(numToCovert, noOfBits):
         numToCovert = int(numToCovert/2)
     ans = "1"+ans
     bitsLeft = noOfBits - len(ans)
-    ans = ("0"*bitsLeft) + ans
+    if bitsLeft>0:
+        ans = ("0"*bitsLeft) + ans
     return ans
 
 
@@ -111,9 +112,15 @@ def TypeA(inst):
         operand2 = registers[regNo2]
         result = 0
 
-        # OVERFLOW(fr add and mul only) AND ERRORS YET TO BE HANDLED
+        #ERRORS YET TO BE HANDLED
         if(partWise[0]=="add"):
             result = operand1+operand2
+            resInBin = convertToBin(result,16)
+            if len(resInBin)>16:
+                resInBin = resInBin[-16:]
+                flags[0]=True
+                result = convertToDecimal(resInBin)
+
         elif partWise[0]=="sub":
             result = operand1-operand2
             if(result<0):
@@ -121,6 +128,14 @@ def TypeA(inst):
                 flags[0]= True
         elif partWise[0]=="mul":
             result = operand1*operand2
+            
+            # Handled overflow for multiplication and addition. Tested from my side. You guys also check once.
+            resInBin = convertToBin(result,16)
+            if len(resInBin)>16:
+                resInBin = resInBin[-16:]
+                flags[0]=True
+                result = convertToDecimal(resInBin)
+
         elif partWise[0]=="xor":
             result = operand1^operand2
         elif partWise[0]=="or":
@@ -130,7 +145,10 @@ def TypeA(inst):
         registers[resultRegNo]=result
     return toRet
 
-for i in instructions:
+for j in range(len(instructions)):
+    currFlagState = flags.copy
+    flags = [False]*4
+    i = instructions[j]
     curOp = i.split()[0]
     
     if(curOp=="add" or curOp=="sub" or curOp=="mul" or curOp=="xor" or curOp=="or" or curOp=="and"):
