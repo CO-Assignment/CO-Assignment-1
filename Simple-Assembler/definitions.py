@@ -5,7 +5,7 @@ flags = [False] * 4
 labels = {}
 memory = [[0, 0]] * 256
 
-exeDef = []
+instructions = []
 vonDef = []
 
 for i in range(256):

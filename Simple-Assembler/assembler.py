@@ -18,7 +18,7 @@ for line in stdin:
         else:
             raise Exception("hlt must be the last Command")
 
-    if len(exeDef) == 256:
+    if len(instructions) == 256:
         raise Exception("Memory overflow! 256 lines limit has been reached!")
 
     if line == "":
@@ -42,9 +42,9 @@ for line in stdin:
         continue
 
     # TODO: #7 major error handling left
-    # TODO: #8 Make sure that exeDef is provided with only correct values and thus all syntax error is reported here only
+    # TODO: #8 Make sure that instructions is provided with only correct values and thus all syntax error is reported here only
 
-    exeDef.append(line)
+    instructions.append(line)
 
     # TODO: #1 Make sure each instruction resets the FLAG variable
 
