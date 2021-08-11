@@ -21,12 +21,11 @@ varsDone = False
 stopCode = False
 
 while True:
-    # print(instructions)
-    # print(labels)
-    inst = input().strip()
+
+    currInput = input().strip()
 
     if(stopCode):
-        if(inst!=None):
+        if(currInput!=None):
             raise Exception("hlt must be used only once and at the end of instruction set")
         else:
             break
@@ -34,27 +33,27 @@ while True:
     if len(instructions)==256:
         raise Exception("Memory overflow! 256 lines limit has been reached!")
     
-    if(inst==""):
+    if(currInput==""):
         continue
 
-    if ":" in inst:
+    if ":" in currInput:
         lineNo = len(instructions)  
         # TODO: #2 this should be len(instructions) - 1
-        indexToSplit = inst.index(":")
-        labels[inst[0:indexToSplit]]=lineNo
-        instructions.append((inst[indexToSplit,-1]).strip())
+        indexToSplit = currInput.index(":")
+        labels[currInput[0:indexToSplit]]=lineNo
+        instructions.append((currInput[indexToSplit,-1]).strip())
         continue
 
-    if(varsDone==False and inst[0:3]!="var"):
+    if(varsDone==False and currInput[0:3]!="var"):
         varsDone = True
     
-    elif(varsDone==True and inst[0:3]=="var"):
+    elif(varsDone==True and currInput[0:3]=="var"):
         raise Exception("Variables should only be declared in the starting.")
 
 
-    instructions.append(inst)
+    instructions.append(currInput)
 
-    if inst=="hlt":
+    if currInput=="hlt":
         stopCode = True
     
 
@@ -124,6 +123,7 @@ def TypeD(inst):
 def TypeE(inst):
     pass
 
+#TODO: #3 Recheck flag declaration, shouldn't it be like Flag = '0'*12 + 4 flag bits
 
 for j in range(len(instructions)):
     currFlagState = flags.copy
@@ -131,15 +131,38 @@ for j in range(len(instructions)):
     i = instructions[j]
     curOp = i.split()[0]
     
+    #Type A handling
     if(curOp=="add" or curOp=="sub" or curOp=="mul" or curOp=="xor" or curOp=="or" or curOp=="and"):
         print(TypeA(i))
+    
+    #Type B handling
+    #handling mov
+    elif (curOp=="mov"):
+        if("$" in curOp[-1]):
+            print(TypeB(i))
+        else:
+            print(TypeC(i))
+
+    #handling rest of TypeB
+    elif (curOp=="rs" or curOp=="ls"):
+        print(TypeB(i))
+
+    #TypeC handling
+    elif (curOp=="div" or curOp=="not" or curOp=="cmp"):
+        print(TypeC(i))
+
+    #TypeD handling
     elif (curOp=="ld" or curOp=="st"):
         print(TypeD(i))
-    elif(curOp=="hlt"):
-        print(opcodes[curOp]+("0"*11))
+
+    #TypeE handling  
+    elif (curOp=="jmp" or curOp=="jlt" or curOp=="jgt" or curOp=="je"):
+        print(TypeE(i))
     
+    #TypeF handling      
+    elif(curOp=="hlt"):
+        print(str(opcodes[curOp]+("0"*11)))
 
-
-
-#code checked today working perfectly as expected
-       
+    #Unexpected Values handling
+    else:
+        raise Exception("Unexpected OpCode provided")
