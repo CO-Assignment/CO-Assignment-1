@@ -54,7 +54,6 @@ def TypeA(inst):
 
 
 def TypeB(value):
-
     caller = "movI" if (value[0] == "mov") else value[0]
 
     recBin = decimalToBinary(int(value[-1].split("$")[-1]))
@@ -66,14 +65,23 @@ def TypeB(value):
         immBinary += i
     mainBinary = opcodes[caller] + Register[value[1]] + immBinary
     return mainBinary
-
+    #TODO: #5 Printing and part is done, actual assembling is left to execute
 
 def TypeC(inst):
     pass
 
 
-def TypeD(inst):
-    pass
+def TypeD(value):
+
+
+    mainBinary = opcodes[value[0]] + Register[value[1]] + Variables.get(value[-1])
+
+    return mainBinary
+
+
+
+
+    
 
 
 def TypeE(inst):

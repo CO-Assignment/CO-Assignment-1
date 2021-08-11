@@ -33,4 +33,7 @@ Register = {
     "R5": "101",
     "R6": "110",
 }
-# checked and working reported
+
+Variables = {
+    "x":"00000011"
+}
