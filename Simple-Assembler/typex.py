@@ -4,7 +4,7 @@ from helpers import *
 
 def TypeA(inst):
     toRet = ""
-    partWise = inst.split()
+    partWise = inst
     # print(partWise)
     toRet += opcodes[partWise[0]]
     toRet += "00"
