@@ -12,7 +12,7 @@ from typex import *
 
 
 labels = {}
-memory = [[0,0]]*256
+memory = [[0, 0]] * 256
 
 
 varsDone = False
