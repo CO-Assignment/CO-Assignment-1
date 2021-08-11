@@ -12,10 +12,8 @@ from typex import *
 
 
 labels = {}
-memory = []
+memory = [[0,0]]*256
 
-for i in range(256):
-    memory.append([0, 0])
 
 varsDone = False
 stopCode = False
