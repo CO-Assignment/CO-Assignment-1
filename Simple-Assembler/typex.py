@@ -55,12 +55,12 @@ def TypeA(inst):
 
 def TypeB(value):
 
-    caller = "movI" if (value[0] == "mov") else value[0] 
+    caller = "movI" if (value[0] == "mov") else value[0]
 
     recBin = decimalToBinary(int(value[-1].split("$")[-1]))
     recBin = [str(x) for x in str(recBin)]
-    finalBin = ['0'*(8-len(recBin))]
-    finalBin+= recBin
+    finalBin = ["0" * (8 - len(recBin))]
+    finalBin += recBin
     immBinary = ""
     for i in finalBin:
         immBinary += i

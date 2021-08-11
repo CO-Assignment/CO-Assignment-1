@@ -11,7 +11,7 @@ def convertToBin(numToCovert, noOfBits):
 
 
 def decimalToBinary(n):
-    print(n , "is the recieved binary")
+    print(n, "is the recieved binary")
     return int(bin(n).replace("0b", ""))
 
 
