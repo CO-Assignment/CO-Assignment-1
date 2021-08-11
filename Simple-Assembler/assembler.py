@@ -4,7 +4,6 @@ from typex import *
 from sys import stdin
 
 
-
 varsDone = False
 stopCode = False
 
@@ -13,7 +12,7 @@ for line in stdin:
     line = line.strip()
 
     if stopCode:
-        if line == '':
+        if line == "":
             break
             # raise EOFError("End of input")
         else:
@@ -22,7 +21,7 @@ for line in stdin:
     if len(exeDef) == 256:
         raise Exception("Memory overflow! 256 lines limit has been reached!")
 
-    if line == '':
+    if line == "":
         continue
 
     if varsDone == False and line[0:3] != "var":
@@ -42,8 +41,8 @@ for line in stdin:
         instructions.append((line[indexToSplit, -1]).strip())
         continue
 
-    #TODO: #7 major error handling left
-    # TODO: #8 Make sure that exeDef is provided with only correct values and thus all syntax error is reported here only 
+    # TODO: #7 major error handling left
+    # TODO: #8 Make sure that exeDef is provided with only correct values and thus all syntax error is reported here only
 
     exeDef.append(line)
 
