@@ -8,7 +8,7 @@ varsDone = False
 stopCode = False
 
 for line in stdin:
-
+    
     line = line.strip()
 
     if stopCode:
@@ -50,52 +50,53 @@ for line in stdin:
 
 # TODO: #3 Recheck flag declaration, shouldn't it be like Flag = '0'*12 + 4 flag bits
 
-# for j in range(len(instructions)):
-#     currFlagState = flags.copy
-#     flags = [False] * 4
-#     i = instructions[j]
-#     i = i.split()
-#     curOp = i[0]
+for j in range(len(instructions)):
+    print(registerStored)
+    currFlagState = flags.copy
+    flags = [False] * 4
+    i = instructions[j]
+    i = i.split()
+    curOp = i[0]
 
-#     # Type A handling
-#     if (
-#         curOp == "add"
-#         or curOp == "sub"
-#         or curOp == "mul"
-#         or curOp == "xor"
-#         or curOp == "or"
-#         or curOp == "and"
-#     ):
-#         print(TypeA(i))
+    # Type A handling
+    if (
+        curOp == "add"
+        or curOp == "sub"
+        or curOp == "mul"
+        or curOp == "xor"
+        or curOp == "or"
+        or curOp == "and"
+    ):
+        print(TypeA(i))
 
-#     # Type B handling
-#     # handling mov
-#     elif curOp == "mov":
-#         if "$" in i[-1]:
-#             print(TypeB(i))
-#         else:
-#             print(TypeC(i))
+    # Type B handling
+    # handling mov
+    elif curOp == "mov":
+        if "$" in i[-1]:
+            print(TypeB(i))
+        else:
+            print(TypeC(i))
 
-#     # handling rest of TypeB
-#     elif curOp == "rs" or curOp == "ls":
-#         print(TypeB(i))
+    # handling rest of TypeB
+    elif curOp == "rs" or curOp == "ls":
+        print(TypeB(i))
 
-#     # TypeC handling
-#     elif curOp == "div" or curOp == "not" or curOp == "cmp":
-#         print(TypeC(i))
+    # TypeC handling
+    elif curOp == "div" or curOp == "not" or curOp == "cmp":
+        print(TypeC(i))
 
-#     # TypeD handling
-#     elif curOp == "ld" or curOp == "st":
-#         print(TypeD(i))
+    # TypeD handling
+    elif curOp == "ld" or curOp == "st":
+        print(TypeD(i))
 
-#     # TypeE handling
-#     elif curOp == "jmp" or curOp == "jlt" or curOp == "jgt" or curOp == "je":
-#         print(TypeE(i))
+    # TypeE handling
+    elif curOp == "jmp" or curOp == "jlt" or curOp == "jgt" or curOp == "je":
+        print(TypeE(i))
 
-#     # TypeF handling
-#     elif curOp == "hlt":
-#         print(str(opcodes[curOp] + ("0" * 11)))
+    # TypeF handling
+    elif curOp == "hlt":
+        print(str(opcodes[curOp] + ("0" * 11)))
 
-#     # Unexpected Values handling
-#     else:
-#         raise Exception("Unexpected OpCode provided")
+    # Unexpected Values handling
+    else:
+        raise Exception("Unexpected OpCode provided")

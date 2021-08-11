@@ -4,19 +4,21 @@ from helpers import *
 
 def TypeA(inst):
     toRet = ""
-    partWise = inst.split()
-    # print(partWise)
+    partWise = inst
+    
     toRet += opcodes[partWise[0]]
     toRet += "00"
     if len(partWise) > 3:
-        regNo1 = int(partWise[2][-1:])
-        regNo2 = int(partWise[3][-1:])
-        resultRegNo = int(partWise[1][-1])
-        toRet += convertToBin(resultRegNo, 3)
-        toRet += convertToBin(regNo1, 3)
-        toRet += convertToBin(regNo2, 3)
-        operand1 = registers[regNo1]
-        operand2 = registers[regNo2]
+        regNo1 = partWise[2]
+        regNo2 = partWise[3]
+        resultRegNo = partWise[1]
+        if (regNo1 not in registerStored) or (regNo2 not in registerStored) or (resultRegNo not in registerStored):
+            raise Exception ("Invalid register provided")
+        toRet += convertToBin(int(resultRegNo[-1:]), 3)
+        toRet += convertToBin(int(regNo1[-1:]), 3)
+        toRet += convertToBin(int(regNo2[-1:]), 3)
+        operand1 = registerStored[regNo1]
+        operand2 = registerStored[regNo2]
         result = 0
 
         # TODO: #4 ERRORS YET TO BE HANDLED
@@ -49,14 +51,24 @@ def TypeA(inst):
             result = operand1 | operand2
         elif partWise[0] == "and":
             result = operand1 & operand2
-        registers[resultRegNo] = result
+        registerStored[resultRegNo] = result
+    else:
+        raise Exception("Illegal type A instruction")
+    
+    
     return toRet
 
 
 def TypeB(value):
     caller = "movI" if (value[0] == "mov") else value[0]
     recBin = decimalToBinary(int(value[-1].split("$")[-1]))
+
+    noToStore = int(value[-1].split("$")[-1])
+    
+    registerStored[value[1]] =noToStore
+    
     recBin = [str(x) for x in str(recBin)]
+
     finalBin = ["0" * (8 - len(recBin))]
     finalBin += recBin
     immBinary = ""
