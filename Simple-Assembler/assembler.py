@@ -1,5 +1,5 @@
 from definitions import *
-from helpers     import *
+from helpers import *
 
 # r0 = [0]*16
 # r1 = [0]*16
@@ -9,13 +9,13 @@ from helpers     import *
 # r5 = [0]*16
 # r6 = [0]*16
 
-registers = [0]*7
-flags = [False]*4
+registers = [0] * 7
+flags = [False] * 4
 labels = {}
 memory = []
 
 for i in range(256):
-    memory.append([0,0])
+    memory.append([0, 0])
 
 varsDone = False
 stopCode = False
@@ -24,145 +24,156 @@ while True:
 
     currInput = input().strip()
 
-    if(stopCode):
-        if(currInput!=None):
-            raise Exception("hlt must be used only once and at the end of instruction set")
+    if stopCode:
+        if currInput != None:
+            raise Exception(
+                "hlt must be used only once and at the end of instruction set"
+            )
         else:
             break
 
-    if len(instructions)==256:
+    if len(instructions) == 256:
         raise Exception("Memory overflow! 256 lines limit has been reached!")
-    
-    if(currInput==""):
+
+    if currInput == "":
         continue
 
     if ":" in currInput:
-        lineNo = len(instructions)  
+        lineNo = len(instructions)
         # TODO: #2 this should be len(instructions) - 1
         indexToSplit = currInput.index(":")
-        labels[currInput[0:indexToSplit]]=lineNo
-        instructions.append((currInput[indexToSplit,-1]).strip())
+        labels[currInput[0:indexToSplit]] = lineNo
+        instructions.append((currInput[indexToSplit, -1]).strip())
         continue
 
-    if(varsDone==False and currInput[0:3]!="var"):
+    if varsDone == False and currInput[0:3] != "var":
         varsDone = True
-    
-    elif(varsDone==True and currInput[0:3]=="var"):
-        raise Exception("Variables should only be declared in the starting.")
 
+    elif varsDone == True and currInput[0:3] == "var":
+        raise Exception("Variables should only be declared in the starting.")
 
     instructions.append(currInput)
 
-    if currInput=="hlt":
+    if currInput == "hlt":
         stopCode = True
-    
 
     # TODO: #1 Make sure each instruction resets the FLAG variable
+
 
 def TypeA(inst):
     toRet = ""
     partWise = inst.split()
     # print(partWise)
-    toRet+=opcodes[partWise[0]]
-    toRet +="00"
-    if len(partWise)>3:
+    toRet += opcodes[partWise[0]]
+    toRet += "00"
+    if len(partWise) > 3:
         regNo1 = int(partWise[2][-1:])
         regNo2 = int(partWise[3][-1:])
         resultRegNo = int(partWise[1][-1])
-        toRet+=convertToBin(resultRegNo,3)
-        toRet+=convertToBin(regNo1,3)
-        toRet+=convertToBin(regNo2,3)
+        toRet += convertToBin(resultRegNo, 3)
+        toRet += convertToBin(regNo1, 3)
+        toRet += convertToBin(regNo2, 3)
         operand1 = registers[regNo1]
         operand2 = registers[regNo2]
         result = 0
 
-        #ERRORS YET TO BE HANDLED
-        if(partWise[0]=="add"):
-            result = operand1+operand2
-            resInBin = convertToBin(result,16)
-            if len(resInBin)>16:
+        # ERRORS YET TO BE HANDLED
+        if partWise[0] == "add":
+            result = operand1 + operand2
+            resInBin = convertToBin(result, 16)
+            if len(resInBin) > 16:
                 resInBin = resInBin[-16:]
-                flags[0]=True
+                flags[0] = True
                 result = convertToDecimal(resInBin)
 
-        elif partWise[0]=="sub":
-            result = operand1-operand2
-            if(result<0):
+        elif partWise[0] == "sub":
+            result = operand1 - operand2
+            if result < 0:
                 result = 0
-                flags[0]= True
-        elif partWise[0]=="mul":
-            result = operand1*operand2
-            
+                flags[0] = True
+        elif partWise[0] == "mul":
+            result = operand1 * operand2
+
             # Handled overflow for multiplication and addition. Tested from my side. You guys also check once.
-            resInBin = convertToBin(result,16)
-            if len(resInBin)>16:
+            resInBin = convertToBin(result, 16)
+            if len(resInBin) > 16:
                 resInBin = resInBin[-16:]
-                flags[0]=True
+                flags[0] = True
                 result = convertToDecimal(resInBin)
 
-        elif partWise[0]=="xor":
-            result = operand1^operand2
-        elif partWise[0]=="or":
+        elif partWise[0] == "xor":
+            result = operand1 ^ operand2
+        elif partWise[0] == "or":
             result = operand1 | operand2
-        elif partWise[0]=="and":
+        elif partWise[0] == "and":
             result = operand1 & operand2
-        registers[resultRegNo]=result
+        registers[resultRegNo] = result
     return toRet
-
 
 
 def TypeB(inst):
     pass
 
+
 def TypeC(inst):
     pass
+
 
 def TypeD(inst):
     pass
 
+
 def TypeE(inst):
     pass
 
-#TODO: #3 Recheck flag declaration, shouldn't it be like Flag = '0'*12 + 4 flag bits
+
+# TODO: #3 Recheck flag declaration, shouldn't it be like Flag = '0'*12 + 4 flag bits
 
 for j in range(len(instructions)):
     currFlagState = flags.copy
-    flags = [False]*4
+    flags = [False] * 4
     i = instructions[j]
     curOp = i.split()[0]
-    
-    #Type A handling
-    if(curOp=="add" or curOp=="sub" or curOp=="mul" or curOp=="xor" or curOp=="or" or curOp=="and"):
+
+    # Type A handling
+    if (
+        curOp == "add"
+        or curOp == "sub"
+        or curOp == "mul"
+        or curOp == "xor"
+        or curOp == "or"
+        or curOp == "and"
+    ):
         print(TypeA(i))
-    
-    #Type B handling
-    #handling mov
-    elif (curOp=="mov"):
-        if("$" in curOp[-1]):
+
+    # Type B handling
+    # handling mov
+    elif curOp == "mov":
+        if "$" in curOp[-1]:
             print(TypeB(i))
         else:
             print(TypeC(i))
 
-    #handling rest of TypeB
-    elif (curOp=="rs" or curOp=="ls"):
+    # handling rest of TypeB
+    elif curOp == "rs" or curOp == "ls":
         print(TypeB(i))
 
-    #TypeC handling
-    elif (curOp=="div" or curOp=="not" or curOp=="cmp"):
+    # TypeC handling
+    elif curOp == "div" or curOp == "not" or curOp == "cmp":
         print(TypeC(i))
 
-    #TypeD handling
-    elif (curOp=="ld" or curOp=="st"):
+    # TypeD handling
+    elif curOp == "ld" or curOp == "st":
         print(TypeD(i))
 
-    #TypeE handling  
-    elif (curOp=="jmp" or curOp=="jlt" or curOp=="jgt" or curOp=="je"):
+    # TypeE handling
+    elif curOp == "jmp" or curOp == "jlt" or curOp == "jgt" or curOp == "je":
         print(TypeE(i))
-    
-    #TypeF handling      
-    elif(curOp=="hlt"):
-        print(str(opcodes[curOp]+("0"*11)))
 
-    #Unexpected Values handling
+    # TypeF handling
+    elif curOp == "hlt":
+        print(str(opcodes[curOp] + ("0" * 11)))
+
+    # Unexpected Values handling
     else:
         raise Exception("Unexpected OpCode provided")
