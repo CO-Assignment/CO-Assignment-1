@@ -31,7 +31,7 @@ while True:
         #         "hlt must be used only once and at the end of instruction set"
         #     )
         # else:
-            break
+        break
 
     if len(instructions) == 256:
         raise Exception("Memory overflow! 256 lines limit has been reached!")
@@ -84,7 +84,7 @@ for j in range(len(instructions)):
     # Type B handling
     # handling mov
     elif curOp == "mov":
-        if '$' in i[-1]:
+        if "$" in i[-1]:
             print(TypeB(i))
         else:
             print(TypeC(i))
