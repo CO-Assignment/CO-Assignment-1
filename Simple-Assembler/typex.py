@@ -65,7 +65,8 @@ def TypeB(value):
         immBinary += i
     mainBinary = opcodes[caller] + Register[value[1]] + immBinary
     return mainBinary
-    #TODO: #5 Printing and part is done, actual assembling is left to execute
+    # TODO: #5 Printing and part is done, actual assembling is left to execute
+
 
 def TypeC(inst):
     pass
@@ -73,15 +74,9 @@ def TypeC(inst):
 
 def TypeD(value):
 
-
     mainBinary = opcodes[value[0]] + Register[value[1]] + Variables.get(value[-1])
 
     return mainBinary
-
-
-
-
-    
 
 
 def TypeE(inst):

@@ -34,6 +34,4 @@ Register = {
     "R6": "110",
 }
 
-Variables = {
-    "x":"00000011"
-}
+Variables = {"x": "00000011"}
