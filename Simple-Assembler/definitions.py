@@ -3,7 +3,10 @@ registers = [0] * 7
 flags = [False] * 4
 
 labels = {}
-memory = []
+memory = [[0, 0]] * 256
+
+exeDef = []
+vonDef = []
 
 for i in range(256):
     memory.append([0, 0])
