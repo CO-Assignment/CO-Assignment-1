@@ -95,6 +95,8 @@ while True:
         break
     
 
+    # TODO: #1 Make sure each instruction resets the FLAG variable
+
 def TypeA(inst):
     toRet = ""
     partWise = inst.split()
