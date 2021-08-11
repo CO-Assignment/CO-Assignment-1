@@ -1,4 +1,6 @@
 instructions = []
+registers = [0] * 7
+flags = [False] * 4
 opcodes = {
     "add": "00000",
     "sub": "00001",
