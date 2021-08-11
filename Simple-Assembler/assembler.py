@@ -11,7 +11,6 @@ from typex import *
 # r6 = [0]*16
 
 
-
 labels = {}
 memory = []
 
@@ -23,11 +22,9 @@ stopCode = False
 
 while True:
 
-    
-
     currInput = input().strip()
     print("Input is", currInput)
-    
+
     if stopCode:
         if currInput != None:
             raise Exception(
@@ -64,9 +61,6 @@ while True:
     # TODO: #1 Make sure each instruction resets the FLAG variable
 
 
-
-
-
 # TODO: #3 Recheck flag declaration, shouldn't it be like Flag = '0'*12 + 4 flag bits
 
 for j in range(len(instructions)):
@@ -77,8 +71,12 @@ for j in range(len(instructions)):
 
     # Type A handling
     if (
-        curOp == "add" or curOp == "sub" or curOp == "mul"
-        or curOp == "xor" or curOp == "or" or curOp == "and"
+        curOp == "add"
+        or curOp == "sub"
+        or curOp == "mul"
+        or curOp == "xor"
+        or curOp == "or"
+        or curOp == "and"
     ):
         print(TypeA(i))
 

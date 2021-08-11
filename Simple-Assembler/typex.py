@@ -1,6 +1,7 @@
 from definitions import *
 from helpers import *
 
+
 def TypeA(inst):
     toRet = ""
     partWise = inst.split()
@@ -18,7 +19,7 @@ def TypeA(inst):
         operand2 = registers[regNo2]
         result = 0
 
-        #TODO: #4 ERRORS YET TO BE HANDLED
+        # TODO: #4 ERRORS YET TO BE HANDLED
         if partWise[0] == "add":
             result = operand1 + operand2
             resInBin = convertToBin(result, 16)
@@ -53,10 +54,7 @@ def TypeA(inst):
 
 
 def TypeB(value):
-    return(value)
-
-
-    
+    return value
 
 
 def TypeC(inst):
