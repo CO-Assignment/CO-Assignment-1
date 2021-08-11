@@ -1,27 +1,5 @@
-instructions = []
-opcodes = {
-    "add":"00000",
-    "sub":"00001",
-    "movI":"00010",
-    "movR":"00011",
-    "ld":"00100",
-    "st":"00101",
-    "mul":"00110",
-    "div":"00111",
-    "rs":"01000",
-    "ls":"01001",
-    "xor":"01010",
-    "or":"01011",
-    "and":"01100",
-    "not":"01101",
-    "cmp":"01110",
-    "jmp":"01111",
-    "jlt":"10000",
-    "jgt":"10001",
-    "je":"10010",
-    "hlt":"10011"
-    }
-# op code checked and are correct
+from definitions import *
+from helpers     import *
 
 # r0 = [0]*16
 # r1 = [0]*16
@@ -35,64 +13,49 @@ registers = [0]*7
 flags = [False]*4
 labels = {}
 memory = []
+
 for i in range(256):
     memory.append([0,0])
 
-def convertToBin(numToCovert, noOfBits):
-    ans = ""
-    while numToCovert>1:
-        ans = str(numToCovert%2)+ans
-        numToCovert = int(numToCovert/2)
-    ans = "1"+ans
-    bitsLeft = noOfBits - len(ans)
-    if bitsLeft>0:
-        ans = ("0"*bitsLeft) + ans
-    return ans
-
-
-def convertToDecimal(bin_str):
-    """Handles binary number as strings"""
-    bin_num = str(bin_str)
-    print(bin_num)
-    toRet = 0
-    n = len(bin_num)
-    for i in range(n):
-        if(bin_num[n-i-1]=="1"):
-            toRet += pow(2,i)
-        else:
-            continue
-    return toRet
-
-
 varsDone = False
+stopCode = False
 
 while True:
     # print(instructions)
     # print(labels)
     inst = input().strip()
+
+    if(stopCode):
+        if(inst!=None):
+            raise Exception("hlt must be used only once and at the end of instruction set")
+        else:
+            break
+
     if len(instructions)==256:
         raise Exception("Memory overflow! 256 lines limit has been reached!")
     
+    if(inst==""):
+        continue
+
     if ":" in inst:
-        lineNo = len(instructions)
+        lineNo = len(instructions)  
+        # TODO: #2 this should be len(instructions) - 1
         indexToSplit = inst.index(":")
         labels[inst[0:indexToSplit]]=lineNo
-        instructions.append(inst.split(":")[1].strip())
+        instructions.append((inst[indexToSplit,-1]).strip())
         continue
 
     if(varsDone==False and inst[0:3]!="var"):
-        
         varsDone = True
-
-    if(inst==""):
-        continue
     
-    if(inst[0:3]=="var" and varsDone==True):
+    elif(varsDone==True and inst[0:3]=="var"):
         raise Exception("Variables should only be declared in the starting.")
 
+
     instructions.append(inst)
+
     if inst=="hlt":
-        break
+        stopCode = True
     
 
     # TODO: #1 Make sure each instruction resets the FLAG variable
