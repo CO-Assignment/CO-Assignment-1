@@ -54,7 +54,18 @@ def TypeA(inst):
 
 
 def TypeB(value):
-    return value  # ['mov', 'R1', '$100']
+
+    caller = "movI" if (value[0] == "mov") else value[0] 
+
+    recBin = decimalToBinary(int(value[-1].split("$")[-1]))
+    recBin = [str(x) for x in str(recBin)]
+    finalBin = ['0'*(8-len(recBin))]
+    finalBin+= recBin
+    immBinary = ""
+    for i in finalBin:
+        immBinary += i
+    mainBinary = opcodes[caller] + Register[value[1]] + immBinary
+    return mainBinary
 
 
 def TypeC(inst):

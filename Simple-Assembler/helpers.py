@@ -10,8 +10,9 @@ def convertToBin(numToCovert, noOfBits):
     return ans
 
 
-# def decimalToBinary(n):
-#     return bin(n).replace("0b", "")
+def decimalToBinary(n):
+    print(n , "is the recieved binary")
+    return int(bin(n).replace("0b", ""))
 
 
 def convertToDecimal(bin_str):
