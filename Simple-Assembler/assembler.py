@@ -8,7 +8,7 @@ varsDone = False
 stopCode = False
 
 for line in stdin:
-    
+
     line = line.strip()
 
     if stopCode:

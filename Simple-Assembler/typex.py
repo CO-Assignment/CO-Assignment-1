@@ -5,15 +5,19 @@ from helpers import *
 def TypeA(inst):
     toRet = ""
     partWise = inst
-    
+
     toRet += opcodes[partWise[0]]
     toRet += "00"
     if len(partWise) > 3:
         regNo1 = partWise[2]
         regNo2 = partWise[3]
         resultRegNo = partWise[1]
-        if (regNo1 not in registerStored) or (regNo2 not in registerStored) or (resultRegNo not in registerStored):
-            raise Exception ("Invalid register provided")
+        if (
+            (regNo1 not in registerStored)
+            or (regNo2 not in registerStored)
+            or (resultRegNo not in registerStored)
+        ):
+            raise Exception("Invalid register provided")
         toRet += convertToBin(int(resultRegNo[-1:]), 3)
         toRet += convertToBin(int(regNo1[-1:]), 3)
         toRet += convertToBin(int(regNo2[-1:]), 3)
@@ -54,8 +58,7 @@ def TypeA(inst):
         registerStored[resultRegNo] = result
     else:
         raise Exception("Illegal type A instruction")
-    
-    
+
     return toRet
 
 
@@ -64,9 +67,9 @@ def TypeB(value):
     recBin = decimalToBinary(int(value[-1].split("$")[-1]))
 
     noToStore = int(value[-1].split("$")[-1])
-    
-    registerStored[value[1]] =noToStore
-    
+
+    registerStored[value[1]] = noToStore
+
     recBin = [str(x) for x in str(recBin)]
 
     finalBin = ["0" * (8 - len(recBin))]
