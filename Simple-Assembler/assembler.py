@@ -26,11 +26,11 @@ while True:
     print("Input is", currInput)
 
     if stopCode:
-        if currInput != None:
-            raise Exception(
-                "hlt must be used only once and at the end of instruction set"
-            )
-        else:
+        # if currInput != None:
+        #     raise Exception(
+        #         "hlt must be used only once and at the end of instruction set"
+        #     )
+        # else:
             break
 
     if len(instructions) == 256:
@@ -67,7 +67,8 @@ for j in range(len(instructions)):
     currFlagState = flags.copy
     flags = [False] * 4
     i = instructions[j]
-    curOp = i.split()[0]
+    i = i.split()
+    curOp = i[0]
 
     # Type A handling
     if (
@@ -83,7 +84,7 @@ for j in range(len(instructions)):
     # Type B handling
     # handling mov
     elif curOp == "mov":
-        if "$" in curOp[-1]:
+        if '$' in i[-1]:
             print(TypeB(i))
         else:
             print(TypeC(i))

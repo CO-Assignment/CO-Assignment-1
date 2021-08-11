@@ -54,7 +54,9 @@ def TypeA(inst):
 
 
 def TypeB(value):
-    return value
+    return value  # ['mov', 'R1', '$100']
+
+    
 
 
 def TypeC(inst):
