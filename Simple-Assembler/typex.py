@@ -92,11 +92,10 @@ def TypeC(inst):
 
 
 def TypeD(value):
-    
+
     mainBinary = opcodes[value[0]] + Register[value[1]] + Variables.get(value[-1])
 
     return mainBinary
-
 
 
 def TypeE(inst):
