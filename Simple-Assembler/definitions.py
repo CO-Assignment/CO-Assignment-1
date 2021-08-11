@@ -1,6 +1,13 @@
 instructions = []
 registers = [0] * 7
 flags = [False] * 4
+
+labels = {}
+memory = []
+
+for i in range(256):
+    memory.append([0, 0])
+
 opcodes = {
     "add": "00000",
     "sub": "00001",
@@ -42,4 +49,8 @@ registerStored = {
     "R5": 0,
     "R6": 0,
 }
+
+Variables = {}
+
+
 # checked and working reported
