@@ -23,9 +23,6 @@ for line in stdin:
     elif varsDone == True and line[0:3] == "var":
         raise Exception("Variables should only be declared in the starting.")
 
-    
-    
-    
     if "hlt" in str(line):
         # instructions.append(line)
         if ":" in line:
@@ -70,15 +67,15 @@ for j in range(len(realInstructions)):
 
     # print(registerStored)
     currFlagState = flags[::]
-    powerInd=-1
-    if(True in currFlagState):
-        powerInd= currFlagState.index(True) 
-        powerInd = 3 - powerInd 
+    powerInd = -1
+    if True in currFlagState:
+        powerInd = currFlagState.index(True)
+        powerInd = 3 - powerInd
 
-    if powerInd!=-1:
+    if powerInd != -1:
         registerStored["FLAGS"] = 2 ** powerInd
     else:
-        registerStored["FLAGS"] =0
+        registerStored["FLAGS"] = 0
 
     flags = [False] * 4
 
