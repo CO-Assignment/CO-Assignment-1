@@ -1,4 +1,3 @@
-from os import pipe
 from definitions import *
 from helpers import *
 from typex import *
@@ -6,32 +5,17 @@ from sys import stdin
 
 
 varsDone = False
-stopCode = False
 
 for line in stdin:
     print(labels)
     print(instructions)
     line = line.strip()
 
-    if stopCode:
-        if line == "":
-            break
-            # raise EOFError("End of input")
-        else:
-            raise Exception("hlt must be the last command")
-
     if len(instructions) == 256:
         raise Exception("Memory overflow! 256 lines limit has been reached!")
 
     if line == "":
         continue
-
-    # Syntax Error handling
-    # print(possible_codes)
-    # if str(line.split(" ")[0]) in possible_codes:
-    #     pass
-    # else:
-    #     raise SyntaxError("Wrong OpCode")
 
     if varsDone == False and line[0:3] != "var":
         varsDone = True
@@ -41,7 +25,6 @@ for line in stdin:
 
     if "hlt" == str(line):
         instructions.append(line)
-        stopCode = True
         break
 
     if ":" in line:
@@ -80,8 +63,10 @@ for j in range(len(realInstructions)):
     flags = [False] * 4
 
     i = realInstructions[j]
+    print(i)
     i = i.split()
     curOp = i[0]
+    print(curOp)
 
     # Type A handling
     if (
@@ -126,6 +111,10 @@ for j in range(len(realInstructions)):
     # TypeF handling
     elif curOp == "hlt":
         print(opcodes[curOp] + ("0" * 11))
+
+    elif curOp == "hlt":
+        print(opcodes[curOp] + ("0" * 11))
+    
 
     # Unexpected Values handling
     else:

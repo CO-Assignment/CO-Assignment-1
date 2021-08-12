@@ -33,29 +33,6 @@ opcodes = {
     "hlt": "10011",
 }
 
-possible_codes = [
-    "add",
-    "var",
-    "sub",
-    "mov",
-    "ld",
-    "st",
-    "mul",
-    "div",
-    "rs",
-    "ls",
-    "xor",
-    "or",
-    "and",
-    "not",
-    "cmp",
-    "jmp",
-    "jlt",
-    "jgt",
-    "je",
-    "hlt",
-]
-
 Register = {
     "R0": "000",
     "R1": "001",
@@ -77,6 +54,3 @@ registerStored = {
 
 variables = {}
 variablesStored = {}
-
-
-# checked and working reported
