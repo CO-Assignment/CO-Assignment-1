@@ -55,12 +55,22 @@ for line in stdin:
 
     # TODO: #1 Make sure each instruction resets the FLAG variable
 
-# TODO: #3 Recheck flag declaration, shouldn't it be like Flag = '0'*12 + 4 flag bits
+count = 0
+for i in instructions:
+    if 'var' not in i:
+        break
+    count += 1
+numberOfLines = len(instructions) - count
+
+for i in range(count + 1):
+    k = (instructions[i]).split()
+    variables[instructions[i]] = numberOfLines + i
+    variablesStored[instructions[i]] = convertToBin(numberOfLines + i, 16)
 
 for j in range(len(instructions)):
     print(registerStored)
     currFlagState = flags.copy
-    flags = [False] * 4
+    flags =  [0]*16
     i = instructions[j]
     i = i.split()
     curOp = i[0]

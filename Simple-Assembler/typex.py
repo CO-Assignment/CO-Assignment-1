@@ -82,7 +82,9 @@ def TypeB(value):
 
 
 def checkTypeC(inst):
-    if len(inst) != 3:
+    if (len(inst) == 3 and ((inst[1] == flags or inst[1] in Register) or (inst[1] == flags or inst[2] in Register))):
+        return True
+    if(len(inst) != 3):
         return False
     if inst[0] in opcodes.keys():
         if inst[1] in Register.keys():
@@ -103,26 +105,26 @@ def TypeC(inst):
         if inst[0] == "mov":
             registerStored[inst[1]] = registerStored[inst[2]]
 
-        elif inst[0] == "cmp":
+        elif inst[0] == "cmp" and (id(flags) not in [id(inst[2]), id(inst[1])]):
             reg1 = registerStored[inst[1]]
             reg2 = registerStored[inst[2]]
             if reg1 > reg2:
-                flags[-2] = True
+                flags[-2] = 1
             elif reg2 > reg1:
-                flags[-3] = True
+                flags[-3] = 1
             else:
-                flags[-1] = True
-        elif inst[0] == "div":
+                flags[-1] = 1
+        elif inst[0] == "div"and (id(flags) not in [id(inst[2]), id(inst[1])]):
             quotient = (registerStored[inst[0]]) // (registerStored[inst[1]])
             remainder = registerStored[inst[0]] % registerStored[inst[1]]
             registerStored["R0"] = quotient
             registerStored["R1"] = remainder
-        elif inst[0] == "not":
+        elif inst[0] == "not" and (id(flags) not in [id(inst[2]), id(inst[1])]):
             registerStored[inst[2]] = ~registerStored[inst[1]]
 
         return opcodes[inst[0]] + ("0" * 5) + Register[inst[1]] + Register[inst[2]]
     else:
-        return
+        return "illegal Type C instruction"
 
 
 def TypeD(value):
