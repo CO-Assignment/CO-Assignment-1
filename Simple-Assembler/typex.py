@@ -81,6 +81,8 @@ def TypeB(value):
     return mainBinary
 
 def checkTypeC(inst):
+    if len(inst) != 3:
+        return False
     if(inst[0] in opcodes.keys()):
         if(inst[1] in Register.keys()):
             if(inst[2] in Register.keys()):
