@@ -1,0 +1,33 @@
+name: Lint
+
+on:
+  push:
+    branches:
+      - testing
+  pull_request:
+    branches:
+      - testing
+
+jobs:
+  run-black-linters:
+    name: Running Black Linter
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.9
+
+      - name: Install Python dependencies
+        run: pip install black
+
+      - name: Running Black
+        uses: wearerequired/lint-action@v1
+        with:
+          black: true
+          auto_fix: true
+          black_dir: Simple-Assembler/ 
