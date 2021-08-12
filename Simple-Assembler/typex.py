@@ -82,7 +82,7 @@ def TypeB(value):
 
 
 def checkTypeC(inst):
-    if(len(inst) != 3):
+    if len(inst) != 3:
         return False
     if inst[0] in opcodes.keys():
         if inst[1] in Register.keys():
