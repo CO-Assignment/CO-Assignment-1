@@ -9,6 +9,8 @@ varsDone = False
 stopCode = False
 
 for line in stdin:
+    print(labels)
+    print(instructions)
     line = line.strip()
 
     if stopCode:
@@ -26,10 +28,10 @@ for line in stdin:
 
     # Syntax Error handling
     # print(possible_codes)
-    if str(line.split(" ")[0]) in possible_codes:
-        pass
-    else:
-        raise SyntaxError("Wrong OpCode")
+    # if str(line.split(" ")[0]) in possible_codes:
+    #     pass
+    # else:
+    #     raise SyntaxError("Wrong OpCode")
 
     if varsDone == False and line[0:3] != "var":
         varsDone = True
@@ -47,7 +49,7 @@ for line in stdin:
         # TODO: #2 this should be len(instructions) - 1
         indexToSplit = line.index(":")
         labels[line[0:indexToSplit]] = lineNo
-        instructions.append((line[indexToSplit, -1]).strip())
+        instructions.append((line[indexToSplit+1:]).strip())
         continue
 
     # TODO: #7 major error handling left
@@ -75,7 +77,8 @@ realInstructions = instructions[count:]
 for j in range(len(realInstructions)):
     # print(registerStored)
     currFlagState = flags.copy
-    flags = [0] * 16
+    flags = [False]*4
+  
     i = realInstructions[j]
     i = i.split()
     curOp = i[0]
@@ -113,7 +116,13 @@ for j in range(len(realInstructions)):
 
     # TypeE handling
     elif (curOp == "jmp") or (curOp == "jlt") or (curOp == "jgt") or (curOp == "je"):
-        print(TypeE(i), currFlagState)
+        result = TypeE(i, currFlagState)
+        if(result[0]==-1):
+            print(result[1])
+        else:
+            j = result[0]
+            print(result[1])
+
 
     # TypeF handling
     elif curOp == "hlt":

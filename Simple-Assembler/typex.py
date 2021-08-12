@@ -140,14 +140,28 @@ def TypeD(inst):
     )
 
 
-def TypeE(inst, flags):
+def TypeE(inst, flagsC):
     toRet = ""
     lineToJump = -1
     toRet += opcodes[inst[0]]
+    toRet+=("0"*3)
+
+
     if inst[1] not in labels.keys:
         raise Exception("Illegal label specified")
-    # if(inst[0]=="je"):
-    #      if()
-    # elif (inst[0]=="jgt"):
-    # elif (inst[0]=="jlt"):
-    # elif (inst[0]=="jmp"):
+    
+    if(inst[0]=="je"):
+         if(flagsC[-1]):
+             lineToJump = labels[inst[1]] - len(variablesStored)
+    elif (inst[0]=="jgt"):
+        if(flagsC[-2]):
+             lineToJump = labels[inst[1]] - len(variablesStored)
+    elif (inst[0]=="jlt"):
+        if(flagsC[-3]):
+             lineToJump = labels[inst[1]] - len(variablesStored)
+    elif (inst[0]=="jmp"):
+        lineToJump = labels[inst[1]] - len(variablesStored)
+
+    toRet+=(convertToBin(labels[inst[1]] - len(variablesStored) ,8))
+
+    return [lineToJump,toRet]
