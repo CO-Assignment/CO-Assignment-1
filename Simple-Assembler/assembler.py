@@ -114,7 +114,6 @@ for j in range(len(realInstructions)):
 
     elif curOp == "hlt":
         print(opcodes[curOp] + ("0" * 11))
-    
 
     # Unexpected Values handling
     else:
