@@ -128,11 +128,14 @@ def TypeC(inst):
     return opcodes[inst[0] + "R"] + ("0" * 5) + Register[inst[1]] + Register[inst[2]]
 
 
-def TypeD(value):
+def TypeD(inst):
 
-    mainBinary = opcodes[value[0]] + Register[value[1]] + Variables.get(value[-1])
-
-    return mainBinary
+    # mainBinary = opcodes[value[0]] + Register[value[1]] + variables.get(value[-1])
+    if inst[0] == 'ld':
+        registerStored[inst[1]] = variablesStored[inst[2]]
+    if inst[0] == 'st':
+        variablesStored[inst[2]] = registerStored[inst[1]]
+    return opcodes[inst[0]] + inst[1] + convertToBin(variables[inst[2]],8)
 
 
 def TypeE(inst, flags):
