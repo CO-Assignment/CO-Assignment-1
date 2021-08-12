@@ -11,14 +11,14 @@ def convertToBin(numToCovert, noOfBits):
 
 
 def decimalToBinary(n):
-    #print(n, "is the recieved binary")
+    # print(n, "is the recieved binary")
     return int(bin(n).replace("0b", ""))
 
 
 def convertToDecimal(bin_str):
     """Handles binary number as strings"""
     bin_num = str(bin_str)
-    #print(bin_num)
+    # print(bin_num)
     toRet = 0
     n = len(bin_num)
     for i in range(n):

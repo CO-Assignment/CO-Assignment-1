@@ -25,7 +25,7 @@ for line in stdin:
         continue
 
     # Syntax Error handling
-    #print(possible_codes)
+    # print(possible_codes)
     if str(line.split(" ")[0]) in possible_codes:
         pass
     else:
@@ -68,7 +68,7 @@ for i in range(count + 1):
     variablesStored[instructions[i]] = convertToBin(numberOfLines + i, 16)
 
 for j in range(len(instructions)):
-    #print(registerStored)
+    # print(registerStored)
     currFlagState = flags.copy
     flags = [0] * 16
     i = instructions[j]
