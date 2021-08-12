@@ -6,7 +6,6 @@ labels = {}
 memory = [[0, 0]] * 256
 
 instructions = []
-vonDef = []
 
 for i in range(256):
     memory.append([0, 0])

@@ -38,6 +38,7 @@ for line in stdin:
 
     if "hlt" == str(line):
         stopCode = True
+        break
 
     if ":" in line:
         lineNo = len(instructions)

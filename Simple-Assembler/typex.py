@@ -129,10 +129,10 @@ def TypeC(inst):
 
 
 def TypeD(value):
+    pass
+    # mainBinary = opcodes[value[0]] + Register[value[1]] + variables.get(value[-1])
 
-    mainBinary = opcodes[value[0]] + Register[value[1]] + Variables.get(value[-1])
-
-    return mainBinary
+    # return mainBinary
 
 
 def TypeE(inst, flags):
