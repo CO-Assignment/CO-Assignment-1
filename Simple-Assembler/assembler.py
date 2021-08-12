@@ -8,7 +8,6 @@ varsDone = False
 stopCode = False
 
 for line in stdin:
-
     line = line.strip()
 
     if stopCode:
@@ -109,8 +108,8 @@ for j in range(len(realInstructions)):
         print(TypeD(i))
 
     # TypeE handling
-    elif curOp == "jmp" or curOp == "jlt" or curOp == "jgt" or curOp == "je":
-        print(TypeE(i))
+    elif (curOp == "jmp") or (curOp == "jlt") or (curOp == "jgt") or (curOp == "je"):
+        print(TypeE(i), currFlagState)
 
     # TypeF handling
     elif curOp == "hlt":
