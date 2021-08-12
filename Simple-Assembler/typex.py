@@ -94,11 +94,11 @@ def checkTypeC(inst):
             if inst[2] in Register.keys():
                 return True
             else:
-                print(inst[2] + " is not a valid register")
+                raise Exception(inst[2] + " is not a valid register")
         else:
-            print(inst[1] + "is not  valid register")
+            raise Exception(inst[1] + "is not  valid register")
     else:
-        print(inst[0] + "is not a valid opcode")
+        raise Exception(inst[0] + "is not a valid opcode")
 
     return False
 
