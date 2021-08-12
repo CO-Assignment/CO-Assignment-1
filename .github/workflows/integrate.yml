@@ -1,10 +1,10 @@
 name: Lint
 
 on:
-  # push:
-  #   branches:
-  #     - testing
-  pull_request:
+  push:
+    branches:
+      - testing
+  pull:
     branches:
       - testing
 
