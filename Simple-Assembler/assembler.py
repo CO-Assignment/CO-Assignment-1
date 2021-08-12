@@ -57,7 +57,7 @@ for line in stdin:
 
 count = 0
 for i in instructions:
-    if 'var' not in i:
+    if "var" not in i:
         break
     count += 1
 numberOfLines = len(instructions) - count
@@ -70,7 +70,7 @@ for i in range(count + 1):
 for j in range(len(instructions)):
     print(registerStored)
     currFlagState = flags.copy
-    flags =  [0]*16
+    flags = [0] * 16
     i = instructions[j]
     i = i.split()
     curOp = i[0]

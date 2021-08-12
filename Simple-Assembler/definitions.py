@@ -77,12 +77,8 @@ registerStored = {
     "R6": 0,
 }
 
-variables = {
-    
-}
-variablesStored = {
-
-}
+variables = {}
+variablesStored = {}
 
 
 # checked and working reported

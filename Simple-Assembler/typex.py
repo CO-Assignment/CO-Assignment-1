@@ -82,9 +82,12 @@ def TypeB(value):
 
 
 def checkTypeC(inst):
-    if (len(inst) == 3 and ((inst[1] == flags or inst[1] in Register) or (inst[1] == flags or inst[2] in Register))):
+    if len(inst) == 3 and (
+        (inst[1] == flags or inst[1] in Register)
+        or (inst[1] == flags or inst[2] in Register)
+    ):
         return True
-    if(len(inst) != 3):
+    if len(inst) != 3:
         return False
     if inst[0] in opcodes.keys():
         if inst[1] in Register.keys():
@@ -114,7 +117,7 @@ def TypeC(inst):
                 flags[-3] = 1
             else:
                 flags[-1] = 1
-        elif inst[0] == "div"and (id(flags) not in [id(inst[2]), id(inst[1])]):
+        elif inst[0] == "div" and (id(flags) not in [id(inst[2]), id(inst[1])]):
             quotient = (registerStored[inst[0]]) // (registerStored[inst[1]])
             remainder = registerStored[inst[0]] % registerStored[inst[1]]
             registerStored["R0"] = quotient
