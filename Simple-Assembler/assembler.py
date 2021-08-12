@@ -67,11 +67,13 @@ for i in range(count + 1):
     variables[instructions[i]] = numberOfLines + i
     variablesStored[instructions[i]] = convertToBin(numberOfLines + i, 16)
 
-for j in range(len(instructions)):
+realInstructions = instructions[count:]
+
+for j in range(len(realInstructions)):
     # print(registerStored)
     currFlagState = flags.copy
     flags = [0] * 16
-    i = instructions[j]
+    i = realInstructions[j]
     i = i.split()
     curOp = i[0]
 
