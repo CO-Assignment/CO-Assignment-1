@@ -80,29 +80,44 @@ def TypeB(value):
     mainBinary = opcodes[caller] + Register[value[1]] + immBinary
     return mainBinary
 
-
-def TypeC(inst):
-    if inst[0] == "mov":
-        registerStored[inst[1]] = registerStored[inst[2]]
-
-    elif inst[0] == "cmp":
-        reg1 = registerStored[inst[1]]
-        reg2 = registerStored[inst[2]]
-        if reg1 > reg2:
-            flags[-2] = True
-        elif reg2 > reg1:
-            flags[-2] = True
+def checkTypeC(inst):
+    if(inst[0] in opcodes.keys()):
+        if(inst[1] in Register.keys()):
+            if(inst[2] in Register.keys()):
+                return True
+            else:
+                print(inst[2] + " is not a valid register")
         else:
-            flags[-1] = True
-    elif inst[0] == "div":
-        quotient = (registerStored[inst[0]]) // (registerStored[inst[1]])
-        remainder = registerStored[inst[0]] % registerStored[inst[1]]
-        registerStored["R0"] = quotient
-        registerStored["R1"] = remainder
-    elif inst[0] == "not":
-        registerStored[inst[2]] = ~registerStored[inst[1]]
+            print(inst[1] + "is not  valid register")
+    else:
+        print(inst[0] + "is not a valid opcode")
 
-    return opcodes[inst[0] + "R"] + ("0" * 5) + Register[inst[1]] + Register[inst[2]]
+    return False
+def TypeC(inst):
+    if checkTypeC(inst):
+        if inst[0] == "mov":
+            registerStored[inst[1]] = registerStored[inst[2]]
+
+        elif inst[0] == "cmp":
+            reg1 = registerStored[inst[1]]
+            reg2 = registerStored[inst[2]]
+            if reg1 > reg2:
+                flags[-2] = True
+            elif reg2 > reg1:
+                flags[-3] = True
+            else:
+                flags[-1] = True
+        elif inst[0] == "div":
+            quotient = (registerStored[inst[0]]) // (registerStored[inst[1]])
+            remainder = registerStored[inst[0]] % registerStored[inst[1]]
+            registerStored["R0"] = quotient
+            registerStored["R1"] = remainder
+        elif inst[0] == "not":
+            registerStored[inst[2]] = ~registerStored[inst[1]]
+
+        return opcodes[inst[0]] + ("0" * 5) + Register[inst[1]] + Register[inst[2]]
+    else:
+        return
 
 
 def TypeD(value):
