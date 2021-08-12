@@ -64,10 +64,10 @@ for i in instructions:
     count += 1
 numberOfLines = len(instructions) - count
 
-for i in range(count + 1):
+for i in range(count):
     k = (instructions[i]).split()
-    variables[instructions[i]] = numberOfLines + i
-    variablesStored[instructions[i]] = 0
+    variables[k[1]] = numberOfLines + i
+    variablesStored[k[1]] = 0
     
 # print(instructions)
 realInstructions = instructions[count:]
