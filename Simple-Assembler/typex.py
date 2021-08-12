@@ -107,6 +107,7 @@ def TypeC(inst):
 
     if inst[0] == "mov":
         registerStored[inst[1]] = registerStored[inst[2]]
+        opcodes[inst[0] + "R"] + ("0" * 5) + Register[inst[1]] + Register[inst[2]]
 
     elif inst[0] == "cmp":
         reg1 = registerStored[inst[1]]
@@ -125,7 +126,7 @@ def TypeC(inst):
     elif inst[0] == "not":
         registerStored[inst[2]] = ~registerStored[inst[1]]
 
-    return opcodes[inst[0] + "R"] + ("0" * 5) + Register[inst[1]] + Register[inst[2]]
+    return opcodes[inst[0]] + ("0" * 5) + Register[inst[1]] + Register[inst[2]]
 
 
 def TypeD(inst):
