@@ -41,7 +41,7 @@ Register = {
     "R4": "100",
     "R5": "101",
     "R6": "110",
-    "FLAGS":"111"
+    "FLAGS": "111",
 }
 registerStored = {
     "R0": 0,
@@ -51,7 +51,7 @@ registerStored = {
     "R4": 0,
     "R5": 0,
     "R6": 0,
-    "FLAGS":0
+    "FLAGS": 0,
 }
 
 variables = {}
