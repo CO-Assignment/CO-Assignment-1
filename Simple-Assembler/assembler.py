@@ -67,10 +67,8 @@ realInstructions = instructions[count:]
 # print(realInstructions)
 j = 0
 while j < len(realInstructions):
-    
 
     currFlagState = flags[::]
-       
 
     print(currFlagState)
     powerInd = -1
@@ -78,7 +76,6 @@ while j < len(realInstructions):
         powerInd = currFlagState.index(True)
         flags[powerInd] = False
         powerInd = 3 - powerInd
-        
 
     if powerInd != -1:
         registerStored["FLAGS"] = 2 ** powerInd
