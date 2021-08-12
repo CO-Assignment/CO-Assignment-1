@@ -7,8 +7,8 @@ from sys import stdin
 varsDone = False
 
 for line in stdin:
-    #print(labels)
-    #print(instructions)
+    # print(labels)
+    # print(instructions)
     line = line.strip()
 
     if len(instructions) == 256:
@@ -63,10 +63,10 @@ for j in range(len(realInstructions)):
     flags = [False] * 4
 
     i = realInstructions[j]
-    #print(i)
+    # print(i)
     i = i.split()
     curOp = i[0]
-    #print(curOp)
+    # print(curOp)
 
     # Type A handling
     if (
