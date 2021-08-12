@@ -63,9 +63,9 @@ for i in range(count):
     variables[k[1]] = numberOfLines + i
     variablesStored[k[1]] = 0
 # print(variables,variablesStored)
-#print(instructions)
+# print(instructions)
 realInstructions = instructions[count:]
-#print(realInstructions)
+# print(realInstructions)
 for j in range(len(realInstructions)):
 
     # print(registerStored)
