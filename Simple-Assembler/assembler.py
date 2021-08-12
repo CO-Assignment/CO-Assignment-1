@@ -7,7 +7,7 @@ from sys import stdin
 varsDone = False
 
 for line in stdin:
-    
+
     line = line.strip()
 
     if len(instructions) == 256:
@@ -23,10 +23,10 @@ for line in stdin:
         raise Exception("Variables should only be declared in the starting.")
 
     if "hlt" in str(line):
-        
+
         if ":" in line:
             lineNo = len(instructions)
-            
+
             indexToSplit = line.index(":")
             labels[line[0:indexToSplit]] = lineNo
             instructions.append((line[indexToSplit + 1 :]).strip())
@@ -65,10 +65,10 @@ for i in range(count):
 # print(instructions)
 realInstructions = instructions[count:]
 # print(realInstructions)
-j=0
-while j<len(realInstructions):
+j = 0
+while j < len(realInstructions):
     print(registerStored)
-    
+
     currFlagState = flags[::]
     print(currFlagState)
     powerInd = -1
@@ -142,4 +142,4 @@ while j<len(realInstructions):
     else:
         raise Exception("Unexpected OpCode provided")
 
-    j+=1
+    j += 1
