@@ -55,7 +55,7 @@ possible_codes = [
     "jgt",
     "je",
     "hlt",
-    "label"
+    "label",
 ]
 
 Register = {

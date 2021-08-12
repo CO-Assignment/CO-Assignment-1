@@ -31,12 +31,6 @@ for line in stdin:
     else:
         raise SyntaxError("Wrong OpCode")
 
-
-
-
-
-
-
     if varsDone == False and line[0:3] != "var":
         varsDone = True
 
@@ -45,8 +39,6 @@ for line in stdin:
 
     if "hlt" == str(line):
         stopCode = True
-
-
 
     if ":" in line:
         lineNo = len(instructions)
