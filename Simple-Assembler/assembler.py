@@ -67,27 +67,30 @@ realInstructions = instructions[count:]
 # print(realInstructions)
 j = 0
 while j < len(realInstructions):
-    print(registerStored)
+    
 
     currFlagState = flags[::]
+       
+
     print(currFlagState)
     powerInd = -1
     if True in currFlagState:
         powerInd = currFlagState.index(True)
+        flags[powerInd] = False
         powerInd = 3 - powerInd
+        
 
     if powerInd != -1:
         registerStored["FLAGS"] = 2 ** powerInd
     else:
         registerStored["FLAGS"] = 0
 
-    flags = [False] * 4
-
     i = realInstructions[j]
     # print(i)
     i = i.split()
     curOp = i[0]
     # print(curOp)
+    print(registerStored)
 
     # Type A handling
     if (
