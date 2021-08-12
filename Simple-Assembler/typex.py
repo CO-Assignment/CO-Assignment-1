@@ -104,6 +104,7 @@ def checkTypeC(inst):
 
 
 def TypeC(inst):
+<<<<<<< Updated upstream
 
     if inst[0] == "mov":
         registerStored[inst[1]] = registerStored[inst[2]]
@@ -126,6 +127,32 @@ def TypeC(inst):
         registerStored[inst[2]] = ~registerStored[inst[1]]
 
     return opcodes[inst[0] + "R"] + ("0" * 5) + Register[inst[1]] + Register[inst[2]]
+=======
+    if checkTypeC(inst):
+        if inst[0] == "mov":
+            registerStored[inst[1]] = registerStored[inst[2]]
+
+        elif inst[0] == "cmp" and (id(flags) not in [id(inst[2]), id(inst[1])]):
+            reg1 = registerStored[inst[1]]
+            reg2 = registerStored[inst[2]]
+            if reg1 > reg2:
+                flags[-2] = 1
+            elif reg2 > reg1:
+                flags[-3] = 1
+            else:
+                flags[-1] = 1
+        elif inst[0] == "div" and (id(flags) not in [id(inst[2]), id(inst[1])]):
+            quotient = (registerStored[inst[0]]) // (registerStored[inst[1]])
+            remainder = registerStored[inst[0]] % registerStored[inst[1]]
+            registerStored["R0"] = quotient
+            registerStored["R1"] = remainder
+        elif inst[0] == "not" and (id(flags) not in [id(inst[2]), id(inst[1])]):
+            registerStored[inst[2]] = ~registerStored[inst[1]]
+
+        return opcodes[inst[0]+"R"] + ("0" * 5) + Register[inst[1]] + Register[inst[2]]
+    else:
+        return "illegal Type C instruction"
+>>>>>>> Stashed changes
 
 
 def TypeD(value):
