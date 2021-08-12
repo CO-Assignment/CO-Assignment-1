@@ -1,4 +1,6 @@
 def convertToBin(numToCovert, noOfBits):
+    if(numToCovert==0):
+        return "0"*noOfBits
     ans = ""
     while numToCovert > 1:
         ans = str(numToCovert % 2) + ans
