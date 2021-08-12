@@ -107,8 +107,8 @@ for j in range(len(instructions)):
         print(TypeD(i))
 
     # TypeE handling
-    elif curOp == "jmp" or curOp == "jlt" or curOp == "jgt" or curOp == "je":
-        print(TypeE(i))
+    elif (curOp == "jmp") or (curOp == "jlt") or (curOp == "jgt") or (curOp == "je"):
+        print(TypeE(i),currFlagState)
 
     # TypeF handling
     elif curOp == "hlt":
