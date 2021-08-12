@@ -125,7 +125,9 @@ def TypeC(inst):
         elif inst[0] == "not" and (id(flags) not in [id(inst[2]), id(inst[1])]):
             registerStored[inst[2]] = ~registerStored[inst[1]]
 
-        return opcodes[inst[0] + 'R'] + ("0" * 5) + Register[inst[1]] + Register[inst[2]]
+        return (
+            opcodes[inst[0] + "R"] + ("0" * 5) + Register[inst[1]] + Register[inst[2]]
+        )
     else:
         return "illegal Type C instruction"
 
