@@ -60,6 +60,9 @@ realInstructions = instructions[count:]
 for j in range(len(realInstructions)):
     # print(registerStored)
     currFlagState = flags.copy
+    powerInd = int(currFlagState.find(True))
+    powerInd = 3-powerInd
+    registerStored["FLAGS"] = 2**powerInd
     flags = [False] * 4
 
     i = realInstructions[j]
