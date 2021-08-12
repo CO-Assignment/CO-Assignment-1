@@ -1,3 +1,4 @@
+from os import pipe
 from definitions import *
 from helpers import *
 from typex import *
@@ -37,6 +38,7 @@ for line in stdin:
         raise Exception("Variables should only be declared in the starting.")
 
     if "hlt" == str(line):
+        instructions.append(line)
         stopCode = True
         break
 
@@ -66,9 +68,10 @@ for i in range(count + 1):
     k = (instructions[i]).split()
     variables[instructions[i]] = numberOfLines + i
     variablesStored[instructions[i]] = convertToBin(numberOfLines + i, 16)
-
+    
+# print(instructions)
 realInstructions = instructions[count:]
-
+# print(realInstructions)
 for j in range(len(realInstructions)):
     # print(registerStored)
     currFlagState = flags.copy
@@ -114,7 +117,7 @@ for j in range(len(realInstructions)):
 
     # TypeF handling
     elif curOp == "hlt":
-        print(str(opcodes[curOp] + ("0" * 11)))
+        print(opcodes[curOp] + ("0" * 11))
 
     # Unexpected Values handling
     else:
