@@ -149,7 +149,7 @@ def TypeE(inst, flagsC):
     toRet += opcodes[inst[0]]
     toRet += "0" * 3
 
-    if inst[1] not in labels.keys:
+    if inst[1] not in labels.keys():
         raise Exception("Illegal label specified")
 
     if inst[0] == "je":

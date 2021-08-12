@@ -23,8 +23,17 @@ for line in stdin:
     elif varsDone == True and line[0:3] == "var":
         raise Exception("Variables should only be declared in the starting.")
 
-    if "hlt" == str(line):
-        instructions.append(line)
+    
+    
+    
+    if "hlt" in str(line):
+        # instructions.append(line)
+        if ":" in line:
+            lineNo = len(instructions)
+            # TODO: #2 this should be len(instructions) - 1
+            indexToSplit = line.index(":")
+            labels[line[0:indexToSplit]] = lineNo
+            instructions.append((line[indexToSplit + 1 :]).strip())
         break
 
     if ":" in line:
@@ -54,15 +63,23 @@ for i in range(count):
     variables[k[1]] = numberOfLines + i
     variablesStored[k[1]] = 0
 # print(variables,variablesStored)
-# print(instructions)
+print(instructions)
 realInstructions = instructions[count:]
-# print(realInstructions)
+print(realInstructions)
 for j in range(len(realInstructions)):
+
     # print(registerStored)
-    currFlagState = flags.copy
-    powerInd = int(currFlagState.find(True))
-    powerInd = 3 - powerInd
-    registerStored["FLAGS"] = 2 ** powerInd
+    currFlagState = flags[::]
+    powerInd=-1
+    if(True in currFlagState):
+        powerInd= currFlagState.index(True) 
+        powerInd = 3 - powerInd 
+
+    if powerInd!=-1:
+        registerStored["FLAGS"] = 2 ** powerInd
+    else:
+        registerStored["FLAGS"] =0
+
     flags = [False] * 4
 
     i = realInstructions[j]
