@@ -67,7 +67,7 @@ numberOfLines = len(instructions) - count
 for i in range(count + 1):
     k = (instructions[i]).split()
     variables[instructions[i]] = numberOfLines + i
-    variablesStored[instructions[i]] = convertToBin(numberOfLines + i, 16)
+    variablesStored[instructions[i]] = 0
     
 # print(instructions)
 realInstructions = instructions[count:]

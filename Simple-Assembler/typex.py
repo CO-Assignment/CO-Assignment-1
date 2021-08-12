@@ -135,7 +135,7 @@ def TypeD(inst):
         registerStored[inst[1]] = variablesStored[inst[2]]
     if inst[0] == 'st':
         variablesStored[inst[2]] = registerStored[inst[1]]
-    return opcodes[inst[0]] + inst[1] + convertToBin(variables[inst[2]],8)
+    return opcodes[inst[0]] + inst[1] + convertToBin(int(variables[inst[2]]),8)
 
 
 def TypeE(inst, flags):
