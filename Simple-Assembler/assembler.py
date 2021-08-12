@@ -49,7 +49,7 @@ for line in stdin:
         # TODO: #2 this should be len(instructions) - 1
         indexToSplit = line.index(":")
         labels[line[0:indexToSplit]] = lineNo
-        instructions.append((line[indexToSplit+1:]).strip())
+        instructions.append((line[indexToSplit + 1 :]).strip())
         continue
 
     # TODO: #7 major error handling left
@@ -77,8 +77,8 @@ realInstructions = instructions[count:]
 for j in range(len(realInstructions)):
     # print(registerStored)
     currFlagState = flags.copy
-    flags = [False]*4
-  
+    flags = [False] * 4
+
     i = realInstructions[j]
     i = i.split()
     curOp = i[0]
@@ -117,12 +117,11 @@ for j in range(len(realInstructions)):
     # TypeE handling
     elif (curOp == "jmp") or (curOp == "jlt") or (curOp == "jgt") or (curOp == "je"):
         result = TypeE(i, currFlagState)
-        if(result[0]==-1):
+        if result[0] == -1:
             print(result[1])
         else:
             j = result[0]
             print(result[1])
-
 
     # TypeF handling
     elif curOp == "hlt":
