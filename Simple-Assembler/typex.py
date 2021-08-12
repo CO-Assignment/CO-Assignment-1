@@ -104,7 +104,7 @@ def checkTypeC(inst):
 
 
 def TypeC(inst):
-    
+
     if inst[0] == "mov":
         registerStored[inst[1]] = registerStored[inst[2]]
 
@@ -125,8 +125,7 @@ def TypeC(inst):
     elif inst[0] == "not":
         registerStored[inst[2]] = ~registerStored[inst[1]]
 
-    return opcodes[inst[0]+"R"] + ("0" * 5) + Register[inst[1]] + Register[inst[2]]
-
+    return opcodes[inst[0] + "R"] + ("0" * 5) + Register[inst[1]] + Register[inst[2]]
 
 
 def TypeD(value):
@@ -136,14 +135,14 @@ def TypeD(value):
     return mainBinary
 
 
-def TypeE(inst,flags):
+def TypeE(inst, flags):
     toRet = ""
     lineToJump = -1
-    toRet +=opcodes[inst[0]]
-    if(inst[1] not in labels.keys):
-        raise Exception ("Illegal label specified")
+    toRet += opcodes[inst[0]]
+    if inst[1] not in labels.keys:
+        raise Exception("Illegal label specified")
     # if(inst[0]=="je"):
-    #      if()       
+    #      if()
     # elif (inst[0]=="jgt"):
     # elif (inst[0]=="jlt"):
     # elif (inst[0]=="jmp"):
