@@ -7,8 +7,7 @@ from sys import stdin
 varsDone = False
 
 for line in stdin:
-    # print(labels)
-    # print(instructions)
+    
     line = line.strip()
 
     if len(instructions) == 256:
@@ -24,10 +23,10 @@ for line in stdin:
         raise Exception("Variables should only be declared in the starting.")
 
     if "hlt" in str(line):
-        # instructions.append(line)
+        
         if ":" in line:
             lineNo = len(instructions)
-            # TODO: #2 this should be len(instructions) - 1
+            
             indexToSplit = line.index(":")
             labels[line[0:indexToSplit]] = lineNo
             instructions.append((line[indexToSplit + 1 :]).strip())
@@ -66,10 +65,12 @@ for i in range(count):
 # print(instructions)
 realInstructions = instructions[count:]
 # print(realInstructions)
-for j in range(len(realInstructions)):
-
-    # print(registerStored)
+j=0
+while j<len(realInstructions):
+    print(registerStored)
+    
     currFlagState = flags[::]
+    print(currFlagState)
     powerInd = -1
     if True in currFlagState:
         powerInd = currFlagState.index(True)
@@ -125,8 +126,13 @@ for j in range(len(realInstructions)):
         if result[0] == -1:
             print(result[1])
         else:
+            # print("old", end = " ")
+            # print(j)
             j = result[0]
             print(result[1])
+            # print("new", end = " ")
+            # print(j)
+            continue
 
     # TypeF handling
     elif curOp == "hlt":
@@ -135,3 +141,5 @@ for j in range(len(realInstructions)):
     # Unexpected Values handling
     else:
         raise Exception("Unexpected OpCode provided")
+
+    j+=1

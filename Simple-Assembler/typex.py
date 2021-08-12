@@ -39,6 +39,7 @@ def TypeA(inst):
             if result < 0:
                 result = 0
                 flags[0] = True
+                
         elif partWise[0] == "mul":
             result = operand1 * operand2
 
