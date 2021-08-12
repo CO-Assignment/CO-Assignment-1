@@ -16,13 +16,26 @@ for line in stdin:
             break
             # raise EOFError("End of input")
         else:
-            raise Exception("hlt must be the last Command")
+            raise Exception("hlt must be the last command")
 
     if len(instructions) == 256:
         raise Exception("Memory overflow! 256 lines limit has been reached!")
 
     if line == "":
         continue
+
+    # Syntax Error handling
+    print(possible_codes)
+    if str(line.split(" ")[0]) in possible_codes:
+        pass
+    else:
+        raise SyntaxError("Wrong OpCode")
+
+
+
+
+
+
 
     if varsDone == False and line[0:3] != "var":
         varsDone = True
@@ -32,6 +45,8 @@ for line in stdin:
 
     if "hlt" == str(line):
         stopCode = True
+
+
 
     if ":" in line:
         lineNo = len(instructions)
