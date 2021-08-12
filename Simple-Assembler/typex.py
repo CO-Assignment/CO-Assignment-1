@@ -80,10 +80,11 @@ def TypeB(value):
     mainBinary = opcodes[caller] + Register[value[1]] + immBinary
     return mainBinary
 
+
 def checkTypeC(inst):
-    if(inst[0] in opcodes.keys()):
-        if(inst[1] in Register.keys()):
-            if(inst[2] in Register.keys()):
+    if inst[0] in opcodes.keys():
+        if inst[1] in Register.keys():
+            if inst[2] in Register.keys():
                 return True
             else:
                 print(inst[2] + " is not a valid register")
@@ -93,6 +94,8 @@ def checkTypeC(inst):
         print(inst[0] + "is not a valid opcode")
 
     return False
+
+
 def TypeC(inst):
     if checkTypeC(inst):
         if inst[0] == "mov":
