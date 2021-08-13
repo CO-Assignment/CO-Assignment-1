@@ -22,7 +22,7 @@ def checkB(inst):
     if len(inst) != 3:
         raise Exception('wrong command given for Type B')
     if inst[1] in Register.keys() and ('$' in inst[2]) and (int(inst[2][1:]) < 256) :
-        if(inst[1] != 'Flags'):
+        if(inst[1] != 'FLAGS'):
             return True
         else:
             raise Exception("Illegal command")
@@ -30,6 +30,7 @@ def checkB(inst):
         raise Exception(f'{inst[1]} not a valid register')
     else:
         raise Exception('invalid immediate value')
+        
 def checkC(inst):
     if not (len(inst) == 3):
         raise Exception("wrong command given for Type C")
