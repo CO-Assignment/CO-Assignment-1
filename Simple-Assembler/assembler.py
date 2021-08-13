@@ -2,7 +2,7 @@ from definitions import *
 from helpers import *
 from typex import *
 from sys import stdin
-
+from checker import *
 
 varsDone = False
 
@@ -60,6 +60,7 @@ numberOfLines = len(instructions) - count
 for i in range(count):
     k = (instructions[i]).split()
     # TODO: Illegal variable error handling
+    # TODO: Viva
     variables[k[1]] = numberOfLines + i
     variablesStored[k[1]] = 0
 # print(variables,variablesStored)
@@ -98,7 +99,7 @@ while j < len(realInstructions):
         or curOp == "xor"
         or curOp == "or"
         or curOp == "and"
-    ):
+    ) and checkA(i):
         print(TypeA(i))
 
     # Type B handling
