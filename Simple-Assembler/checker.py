@@ -1,5 +1,4 @@
-from definitions import *
-from helpers import *
+from definitions import registerStored, Register, variables, labels
 
 
 def checkA(inst):
@@ -21,7 +20,10 @@ def checkA(inst):
 def checkB(inst):
     if len(inst) != 3:
         raise Exception('wrong command given for Type B')
-    if inst[1] in Register.keys() and ('$' in inst[2]) and (int(inst[2][1:]) < 256) :
+    if ((inst[1] in Register.keys()) and
+            ('$' in inst[2]) and
+            (int(inst[2][1:]) < 256)):
+
         if(inst[1] != 'FLAGS'):
             return True
         else:
@@ -30,7 +32,8 @@ def checkB(inst):
         raise Exception(f'{inst[1]} not a valid register')
     else:
         raise Exception('invalid immediate value')
-        
+
+
 def checkC(inst):
     if not (len(inst) == 3):
         raise Exception("wrong command given for Type C")
@@ -60,12 +63,11 @@ def checkD(inst):
 
 
 def checkE(inst):
-    if len(inst)!=2:
-        raise Exception("Type E commands have only 1 operand which is the memory address (",len(inst)-1,") specified")
+    if len(inst) != 2:
+        raise Exception("""Type E commands have only 1 operand which is
+            the memory address (""", len(inst)-1, ") specified")
     if inst[1] not in labels.keys():
         if inst[1] in variables.keys():
             raise Exception("Variable specified instead of label")
         raise Exception("Label does not exist")
-    
-
     return True
