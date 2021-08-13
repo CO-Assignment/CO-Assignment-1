@@ -6,9 +6,15 @@ from checker import checkA, checkB, checkC, checkD, checkE
 
 varsDone = False
 linecounter = 0
+hltReached = False
 for line in stdin:
-
     line = line.strip()
+    
+    if hltReached:
+        
+        if line != '':
+            raise Exception("hlt should be the last instruction")
+        break
 
     if linecounter == 256:
         raise Exception("Memory overflow! 256 lines limit has been reached!")
@@ -33,7 +39,8 @@ for line in stdin:
         else:
             instructions.append(line)
 
-        break
+        hltReached = True
+        continue
 
     if ":" in line:
         lineNo = len(instructions)
@@ -49,7 +56,7 @@ for line in stdin:
 
     instructions.append(line)
     linecounter += 1
-
+    
     # TODO: #1 Make sure each instruction resets the FLAG variable
 
 count = 0
@@ -63,6 +70,8 @@ for i in range(count):
     k = (instructions[i]).split()
     # TODO: Illegal variable error handling
     # TODO: Viva
+    if (len(k) != 2):
+        raise Exception("Invalid syntax for variable declaration ")
     variables[k[1]] = numberOfLines + i
     variablesStored[k[1]] = 0
 
