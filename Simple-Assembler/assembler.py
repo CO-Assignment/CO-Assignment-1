@@ -9,9 +9,8 @@ linecounter = 0
 hltReached = False
 for line in stdin:
     line = line.strip()
-    
     if hltReached:
-        
+
         if line != '':
             raise Exception("hlt should be the last instruction")
         break
@@ -56,7 +55,7 @@ for line in stdin:
 
     instructions.append(line)
     linecounter += 1
-    
+
     # TODO: #1 Make sure each instruction resets the FLAG variable
 
 count = 0
