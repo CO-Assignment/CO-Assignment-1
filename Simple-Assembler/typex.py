@@ -1,6 +1,8 @@
-from definitions import *
-from helpers import *
-from checker import *
+from definitions import (flags, labels, variables, Register,
+                         opcodes, registerStored, variablesStored)
+
+from helpers import convertToBin, convertToDecimal
+
 
 def TypeA(inst):
     toRet = ""
@@ -19,7 +21,8 @@ def TypeA(inst):
         ):
             raise Exception("Invalid register provided")
         if "FLAGS" in partWise:
-            raise Exception("FLAGS register cannot be used for a Type A instruction.")
+            raise Exception("""FLAGS register cannot be used
+                             for a Type A instruction.""")
         toRet += convertToBin(int(resultRegNo[-1:]), 3)
         toRet += convertToBin(int(regNo1[-1:]), 3)
         toRet += convertToBin(int(regNo2[-1:]), 3)
@@ -45,7 +48,8 @@ def TypeA(inst):
         elif partWise[0] == "mul":
             result = operand1 * operand2
 
-            # Handled overflow for multiplication and addition. Tested from my side. You guys also check once.
+            # Handled overflow for multiplication and addition.
+            # Tested from my side. You guys also check once.
             resInBin = convertToBin(result, 16)
             if len(resInBin) > 16:
                 resInBin = resInBin[-16:]
@@ -68,7 +72,7 @@ def TypeA(inst):
 def TypeB(value):
     caller = "movI" if (value[0] == "mov") else value[0]
     imm = int(value[-1].split("$")[-1])
-    recBin = convertToBin(imm,8)
+    recBin = convertToBin(imm, 8)
     toshift = str(convertToBin(registerStored[value[1]], 8))
     shiftby = "0" * imm
 
@@ -117,7 +121,8 @@ def TypeC(inst):
     if inst[0] == "mov":
         registerStored[inst[1]] = registerStored[inst[2]]
         return (
-            opcodes[inst[0] + "R"] + ("0" * 5) + Register[inst[1]] + Register[inst[2]]
+            opcodes[inst[0] + "R"] + ("0" * 5)
+            + Register[inst[1]] + Register[inst[2]]
         )
 
     elif inst[0] == "cmp":
@@ -141,17 +146,17 @@ def TypeC(inst):
 
 
 def TypeD(inst):
-
-    # mainBinary = opcodes[value[0]] + Register[value[1]] + variables.get(value[-1])
     if inst[1] == "FLAGS":
-        raise Exception("ld and st are invalid commands for the FLAGS register.")
+        raise Exception("""ld and st are invalid
+                         commands for the FLAGS register.""")
     if inst[0] == "ld":
         registerStored[inst[1]] = variablesStored[inst[2]]
 
     if inst[0] == "st":
         variablesStored[inst[2]] = registerStored[inst[1]]
     return (
-        opcodes[inst[0]] + Register[inst[1]] + convertToBin(int(variables[inst[2]]), 8)
+        opcodes[inst[0]] + Register[inst[1]]
+        + convertToBin(int(variables[inst[2]]), 8)
     )
 
 
