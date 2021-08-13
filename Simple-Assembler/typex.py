@@ -70,20 +70,20 @@ def TypeB(value):
 
     noToStore = int(value[-1].split("$")[-1])
     recBin = decimalToBinary(noToStore)
-    
-    toshift = str(convertToBin(registerStored[value[1]],8))
-    shiftby = "0"*noToStore
-    
-    if(caller == "movI"):
+
+    toshift = str(convertToBin(registerStored[value[1]], 8))
+    shiftby = "0" * noToStore
+
+    if caller == "movI":
         answer = noToStore
-    
-    elif(caller == "ls"):
-        
+
+    elif caller == "ls":
+
         tocrop = toshift + shiftby
         answer = tocrop[-8:]
         answer = convertToDecimal(answer)
 
-    elif(caller == "rs"):
+    elif caller == "rs":
         tocrop = shiftby + toshift
         answer = tocrop[:8]
         answer = convertToDecimal(answer)

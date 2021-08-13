@@ -5,7 +5,7 @@ from sys import stdin
 from checker import *
 
 varsDone = False
-linecounter = 0 
+linecounter = 0
 for line in stdin:
 
     line = line.strip()
@@ -47,7 +47,7 @@ for line in stdin:
     # TODO: #8 Make sure that instructions is provided with only correct values and thus all syntax error is reported here only
 
     instructions.append(line)
-    linecounter+=1
+    linecounter += 1
 
     # TODO: #1 Make sure each instruction resets the FLAG variable
 
