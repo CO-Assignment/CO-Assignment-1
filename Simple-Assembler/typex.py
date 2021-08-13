@@ -18,7 +18,7 @@ def TypeA(inst):
             or (resultRegNo not in registerStored)
         ):
             raise Exception("Invalid register provided")
-        if("FLAGS" in partWise):
+        if "FLAGS" in partWise:
             raise Exception("FLAGS register cannot be used for a Type A instruction.")
         toRet += convertToBin(int(resultRegNo[-1:]), 3)
         toRet += convertToBin(int(regNo1[-1:]), 3)
