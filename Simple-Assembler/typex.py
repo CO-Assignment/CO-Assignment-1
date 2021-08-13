@@ -67,11 +67,28 @@ def TypeA(inst):
 
 def TypeB(value):
     caller = "movI" if (value[0] == "mov") else value[0]
-    recBin = decimalToBinary(int(value[-1].split("$")[-1]))
 
     noToStore = int(value[-1].split("$")[-1])
+    recBin = decimalToBinary(noToStore)
+    
+    toshift = str(convertToBin(registerStored[value[1]],8))
+    shiftby = "0"*noToStore
+    
+    if(caller == "movI"):
+        answer = noToStore
+    
+    elif(caller == "ls"):
+        
+        tocrop = toshift + shiftby
+        answer = tocrop[-8:]
+        answer = convertToDecimal(answer)
 
-    registerStored[value[1]] = noToStore
+    elif(caller == "rs"):
+        tocrop = shiftby + toshift
+        answer = tocrop[:8]
+        answer = convertToDecimal(answer)
+
+    registerStored[value[1]] = answer
 
     recBin = [str(x) for x in str(recBin)]
 

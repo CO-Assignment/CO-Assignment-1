@@ -5,12 +5,12 @@ from sys import stdin
 from checker import *
 
 varsDone = False
-
+linecounter = 0 
 for line in stdin:
 
     line = line.strip()
 
-    if len(instructions) == 256:
+    if linecounter == 256:
         raise Exception("Memory overflow! 256 lines limit has been reached!")
 
     if line == "":
@@ -47,6 +47,7 @@ for line in stdin:
     # TODO: #8 Make sure that instructions is provided with only correct values and thus all syntax error is reported here only
 
     instructions.append(line)
+    linecounter+=1
 
     # TODO: #1 Make sure each instruction resets the FLAG variable
 

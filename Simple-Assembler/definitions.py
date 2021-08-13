@@ -1,5 +1,5 @@
 instructions = []
-registers = [0] * 7
+
 flags = [False] * 4
 
 labels = {}
