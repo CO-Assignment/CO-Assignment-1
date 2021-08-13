@@ -1,6 +1,6 @@
 from definitions import *
 from helpers import *
-
+from checker import *
 
 def TypeA(inst):
     toRet = ""

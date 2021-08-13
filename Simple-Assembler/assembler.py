@@ -116,11 +116,11 @@ while j < len(realInstructions):
         print(TypeB(i))
 
     # TypeC handling
-    elif curOp == "div" or curOp == "not" or curOp == "cmp":
+    elif (curOp == "div" or curOp == "not" or curOp == "cmp") and checkC(i):
         print(TypeC(i))
 
     # TypeD handling
-    elif curOp == "ld" or curOp == "st":
+    elif (curOp == "ld" or curOp == "st") and checkD(i):
         print(TypeD(i))
 
     # TypeE handling
