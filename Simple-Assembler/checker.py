@@ -37,6 +37,8 @@ def checkB(inst):
 def checkC(inst):
     if not (len(inst) == 3):
         raise Exception("wrong command given for Type C")
+    if(inst[1] == "FLAGS"):
+        raise Exception("You cannot write values into the FLAGS register.")    
     if inst[1] in Register.keys() and inst[2] in Register.keys():
         return True
     if not (inst[1] in Register.keys()):
