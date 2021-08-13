@@ -4,7 +4,7 @@ flags = [False] * 4
 
 labels = {}
 memory = [[0, 0]] * 256
-
+output = []
 instructions = []
 
 for i in range(256):

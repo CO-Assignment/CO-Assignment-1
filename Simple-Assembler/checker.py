@@ -29,7 +29,7 @@ def checkB(inst):
         else:
             raise Exception("Illegal command")
     if inst[1] not in Register.keys():
-        raise Exception(f'{inst[1]} not a valid register')
+        raise Exception(inst[1], "not a valid register")
     else:
         raise Exception('invalid immediate value')
 
@@ -42,7 +42,7 @@ def checkC(inst):
     if inst[1] in Register.keys() and inst[2] in Register.keys():
         return True
     if not (inst[1] in Register.keys()):
-        raise Exception(f"{inst[1]} not a valid register")
+        raise Exception(inst[1], " not a valid register")
     if not (inst[2] in Register.keys()):
         raise Exception(f"{inst[2]} not a valid register")
     return False
@@ -58,9 +58,9 @@ def checkD(inst):
     if not (len(inst) == 3):
         raise Exception("wrong command given for Type D")
     elif (inst[1] == "FLAGS") or not (inst[1] in Register.keys()):
-        raise Exception(f"{inst[1]}  not a valid value for register")
+        raise Exception(inst[1], " not a valid value for register")
     elif not (inst[2] in variables.keys()):
-        raise Exception(f"{inst[2]} not a  valid variable")
+        raise Exception(inst[2], " not a  valid variable")
     return False
 
 

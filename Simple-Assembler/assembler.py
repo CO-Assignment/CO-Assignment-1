@@ -1,4 +1,4 @@
-from definitions import (instructions, flags, labels, variables,
+from definitions import (instructions, flags, labels, variables, output,
                          opcodes, registerStored, variablesStored)
 from typex import TypeA, TypeB, TypeC, TypeD, TypeE
 from sys import stdin
@@ -65,16 +65,13 @@ for i in range(count):
     # TODO: Viva
     variables[k[1]] = numberOfLines + i
     variablesStored[k[1]] = 0
-# print(variables,variablesStored)
-# print(instructions)
+
 realInstructions = instructions[count:]
-# print(realInstructions)
 j = 0
 while j < len(realInstructions):
 
     currFlagState = flags[::]
 
-    # print(currFlagState)
     powerInd = -1
     if True in currFlagState:
         powerInd = currFlagState.index(True)
@@ -87,11 +84,8 @@ while j < len(realInstructions):
         registerStored["FLAGS"] = 0
 
     i = realInstructions[j]
-    # print(i)
     i = i.split()
     curOp = i[0]
-    # print(curOp)
-    # print(registerStored)
 
     # Type A handling
     if (
@@ -102,34 +96,34 @@ while j < len(realInstructions):
         or curOp == "or"
         or curOp == "and"
     ) and checkA(i):
-        print(TypeA(i))
+        output.append(TypeA(i))
 
     # Type B handling
     # handling mov
     elif curOp == "mov":
         if "$" in i[-1] and checkB(i):
-            print(TypeB(i))
+            output.append(TypeB(i))
         elif checkC(i):
-            print(TypeC(i))
+            output.append(TypeC(i))
 
     # handling rest of TypeB
     elif ((curOp == "rs" or curOp == "ls") and checkB(i)):
-        print(TypeB(i))
+        output.append(TypeB(i))
 
     # TypeC handling
     elif (curOp == "div" or curOp == "not" or curOp == "cmp") and checkC(i):
-        print(TypeC(i))
+        output.append(TypeC(i))
 
     # TypeD handling
     elif (curOp == "ld" or curOp == "st") and checkD(i):
-        print(TypeD(i))
+        output.append(TypeD(i))
 
     # TypeE handling
     elif ((curOp == "jmp") or (curOp == "jlt") or (curOp == "jgt")
             or (curOp == "je")) and checkE(i):
         result = TypeE(i, currFlagState)
         if result[0] == -1:
-            print(result[1])
+            output.append(result[1])
         else:
             # print("old", end = " ")
             # print(j)
@@ -141,10 +135,13 @@ while j < len(realInstructions):
 
     # TypeF handling
     elif curOp == "hlt":
-        print(opcodes[curOp] + ("0" * 11))
+        output.append(opcodes[curOp] + ("0" * 11))
 
     # Unexpected Values handling
     else:
         raise Exception("Unexpected OpCode provided")
 
     j += 1
+
+for i in output:
+    print(i)
