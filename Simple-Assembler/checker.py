@@ -60,4 +60,12 @@ def checkD(inst):
 
 
 def checkE(inst):
-    pass
+    if len(inst)!=2:
+        raise Exception("Type E commands have only 1 operand which is the memory address (",len(inst)-1,") specified")
+    if inst[1] not in labels.keys():
+        if inst[1] in variables.keys():
+            raise Exception("Variable specified instead of label")
+        raise Exception("Label does not exist")
+    
+
+    return True
