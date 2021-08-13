@@ -33,13 +33,14 @@ def checkC(inst):
 
 
 def checkD(inst):
-    if not (len(inst) == 3):
+    if (inst[1] in Register.keys()) and (inst[2] in variables.keys()) and (inst[1] != 'FLAGS'):
+        return True
+    if not(len(inst) == 3):
         raise Exception("wrong command given for Type D")
-    if (inst[1] == "FLAGS") or not (inst[1] in Register.keys()):
-        raise Exception(f"{inst[1]}  not a valid value for register")
-    if not (inst[2] in variables.keys()):
-        raise Exception(f"{inst[2]} not a  valid variable")
-
-
+    elif (inst[1] == 'FLAGS') or not(inst[1] in Register.keys()):
+        raise Exception(f'{inst[1]}  not a valid value for register')
+    elif not (inst[2]  in variables.keys()):
+        raise Exception(f'{inst[2]} not a  valid variable')   
+    return False
 def checkE(inst):
     pass
