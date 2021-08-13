@@ -12,9 +12,7 @@ def checkA(inst):
         or (inst[3] not in registerStored)
     ):
         raise Exception("Invalid register provided")
-    if ((inst[1] == "FLAGS")
-        or (inst[2] =="FLAGS")
-        or (inst[3] =="FLAGS")):
+    if (inst[1] == "FLAGS") or (inst[2] == "FLAGS") or (inst[3] == "FLAGS"):
         raise Exception("Cannot use type A instruction for FLAG register")
 
     return True
