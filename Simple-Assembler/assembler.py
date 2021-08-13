@@ -1,8 +1,8 @@
-from definitions import *
-from helpers import *
-from typex import *
+from definitions import (instructions, flags, labels, variables,
+                         opcodes, registerStored, variablesStored)
+from typex import TypeA, TypeB, TypeC, TypeD, TypeE
 from sys import stdin
-from checker import *
+from checker import checkA, checkB, checkC, checkD, checkE
 
 varsDone = False
 linecounter = 0
@@ -16,10 +16,10 @@ for line in stdin:
     if line == "":
         continue
 
-    if varsDone == False and line[0:3] != "var":
+    if varsDone is False and line[0:3] != "var":
         varsDone = True
 
-    elif varsDone == True and line[0:3] == "var":
+    elif varsDone is True and line[0:3] == "var":
         raise Exception("Variables should only be declared in the starting.")
 
     if "hlt" in str(line):
@@ -29,7 +29,7 @@ for line in stdin:
 
             indexToSplit = line.index(":")
             labels[line[0:indexToSplit]] = lineNo
-            instructions.append((line[indexToSplit + 1 :]).strip())
+            instructions.append((line[indexToSplit + 1:]).strip())
         else:
             instructions.append(line)
 
@@ -40,11 +40,12 @@ for line in stdin:
         # TODO: #2 this should be len(instructions) - 1
         indexToSplit = line.index(":")
         labels[line[0:indexToSplit]] = lineNo
-        instructions.append((line[indexToSplit + 1 :]).strip())
+        instructions.append((line[indexToSplit + 1:]).strip())
         continue
 
     # TODO: #7 major error handling left
-    # TODO: #8 Make sure that instructions is provided with only correct values and thus all syntax error is reported here only
+    # TODO: #8 Make sure that instructions is provided with only correct values
+    #  and thus all syntax error is reported here only
 
     instructions.append(line)
     linecounter += 1
@@ -124,7 +125,8 @@ while j < len(realInstructions):
         print(TypeD(i))
 
     # TypeE handling
-    elif (curOp == "jmp") or (curOp == "jlt") or (curOp == "jgt") or (curOp == "je"):
+    elif ((curOp == "jmp") or (curOp == "jlt") or (curOp == "jgt")
+            or (curOp == "je")) and checkE(i):
         result = TypeE(i, currFlagState)
         if result[0] == -1:
             print(result[1])
