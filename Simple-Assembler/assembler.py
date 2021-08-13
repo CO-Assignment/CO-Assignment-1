@@ -70,7 +70,7 @@ while j < len(realInstructions):
 
     currFlagState = flags[::]
 
-    #print(currFlagState)
+    # print(currFlagState)
     powerInd = -1
     if True in currFlagState:
         powerInd = currFlagState.index(True)
@@ -87,7 +87,7 @@ while j < len(realInstructions):
     i = i.split()
     curOp = i[0]
     # print(curOp)
-    #print(registerStored)
+    # print(registerStored)
 
     # Type A handling
     if (
