@@ -72,8 +72,11 @@ def TypeA(inst):
 def TypeB(value):
     caller = "movI" if (value[0] == "mov") else value[0]
     imm = int(value[-1].split("$")[-1])
+    if(imm > 255) or (imm < 0):
+        raise Exception("""The immediate value has to be in the inclusive
+         range of 0 and 255""")
     recBin = convertToBin(imm, 8)
-    toshift = str(convertToBin(registerStored[value[1]], 8))
+    toshift = str(convertToBin(registerStored[value[1]], 16))
     shiftby = "0" * imm
 
     if caller == "movI":
@@ -81,12 +84,12 @@ def TypeB(value):
 
     elif caller == "ls":
         tocrop = toshift + shiftby
-        answer = tocrop[-8:]
+        answer = tocrop[-16:]
         answer = convertToDecimal(answer)
 
     elif caller == "rs":
         tocrop = shiftby + toshift
-        answer = tocrop[:8]
+        answer = tocrop[:16]
         answer = convertToDecimal(answer)
 
     registerStored[value[1]] = answer
