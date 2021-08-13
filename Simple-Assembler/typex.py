@@ -135,11 +135,11 @@ def TypeC(inst):
 def TypeD(inst):
 
     # mainBinary = opcodes[value[0]] + Register[value[1]] + variables.get(value[-1])
-    if(inst[1]=="FLAGS"):
-        raise Exception ("ld and st are invalid commands for the FLAGS register.")
+    if inst[1] == "FLAGS":
+        raise Exception("ld and st are invalid commands for the FLAGS register.")
     if inst[0] == "ld":
         registerStored[inst[1]] = variablesStored[inst[2]]
-        
+
     if inst[0] == "st":
         variablesStored[inst[2]] = registerStored[inst[1]]
     return (

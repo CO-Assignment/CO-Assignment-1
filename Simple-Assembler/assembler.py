@@ -59,7 +59,7 @@ numberOfLines = len(instructions) - count
 
 for i in range(count):
     k = (instructions[i]).split()
-    #TODO: Illegal variable error handling
+    # TODO: Illegal variable error handling
     variables[k[1]] = numberOfLines + i
     variablesStored[k[1]] = 0
 # print(variables,variablesStored)
