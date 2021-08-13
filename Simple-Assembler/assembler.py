@@ -106,13 +106,13 @@ while j < len(realInstructions):
     # Type B handling
     # handling mov
     elif curOp == "mov":
-        if "$" in i[-1]:
+        if "$" in i[-1] and checkB(i):
             print(TypeB(i))
-        else:
+        elif checkC(i):
             print(TypeC(i))
 
     # handling rest of TypeB
-    elif curOp == "rs" or curOp == "ls":
+    elif ((curOp == "rs" or curOp == "ls") and checkB(i)):
         print(TypeB(i))
 
     # TypeC handling
