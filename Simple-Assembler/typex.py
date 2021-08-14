@@ -143,7 +143,19 @@ def TypeC(inst):
         registerStored["R0"] = quotient
         registerStored["R1"] = remainder
     elif inst[0] == "not":
-        registerStored[inst[2]] = ~registerStored[inst[1]]
+        
+        noToFlip = convertToBin(registerStored[inst[2]], 16)
+        
+        inverting = ""
+        for ch in range(len(noToFlip)):
+            if(noToFlip[ch] == "1"):
+                inverting = inverting + "0"
+            else:
+                inverting = inverting + "1"
+        
+        flippedNo = convertToDecimal(inverting)
+        
+        registerStored[inst[1]] = flippedNo
 
     return opcodes[inst[0]] + ("0" * 5) + Register[inst[1]] + Register[inst[2]]
 
