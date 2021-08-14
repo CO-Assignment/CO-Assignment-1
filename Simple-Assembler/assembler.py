@@ -5,7 +5,7 @@ from sys import stdin
 from checker import checkA, checkB, checkC, checkD, checkE
 
 varsDone = False
-linecounter = 0
+# linecounter = 0
 hltReached = False
 for line in stdin:
     line = line.strip()
@@ -15,7 +15,7 @@ for line in stdin:
             raise Exception("hlt should be the last instruction")
         break
 
-    if linecounter == 256:
+    if len(instructions) == 256:
         raise Exception("Memory overflow! 256 lines limit has been reached!")
 
     if line == "":
@@ -34,7 +34,7 @@ for line in stdin:
 
             indexToSplit = line.index(":")
             if(" " in line[0:indexToSplit]):
-                raise Exception("""cannot have space 
+                raise Exception("""cannot have space
                 between label name and \":\" """)
             labels[line[0:indexToSplit]] = lineNo
             instructions.append((line[indexToSplit + 1:]).strip())
@@ -59,7 +59,7 @@ for line in stdin:
     #  and thus all syntax error is reported here only
 
     instructions.append(line)
-    linecounter += 1
+    # linecounter += 1
 
     # TODO: #1 Make sure each instruction resets the FLAG variable
 
