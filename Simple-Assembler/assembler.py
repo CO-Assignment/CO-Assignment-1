@@ -33,6 +33,9 @@ for line in stdin:
             lineNo = len(instructions)
 
             indexToSplit = line.index(":")
+            if(" " in line[0:indexToSplit]):
+                raise Exception("""cannot have space 
+                between label name and \":\" """)
             labels[line[0:indexToSplit]] = lineNo
             instructions.append((line[indexToSplit + 1:]).strip())
         else:
@@ -45,6 +48,8 @@ for line in stdin:
         lineNo = len(instructions)
         # TODO: #2 this should be len(instructions) - 1
         indexToSplit = line.index(":")
+        if(" " in line[0:indexToSplit]):
+            raise Exception("cannot have space between label name and \":\"")
         labels[line[0:indexToSplit]] = lineNo
         instructions.append((line[indexToSplit + 1:]).strip())
         continue
