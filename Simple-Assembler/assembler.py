@@ -82,7 +82,7 @@ for i in range(count):
 realInstructions = instructions[count:]
 j = 0
 while j < len(realInstructions):
-
+    # print(j)
     currFlagState = flags[::]
 
     powerInd = -1
@@ -138,12 +138,8 @@ while j < len(realInstructions):
         if result[0] == -1:
             output.append(result[1])
         else:
-            # print("old", end = " ")
-            # print(j)
             j = result[0]
-            print(result[1])
-            # print("new", end = " ")
-            # print(j)
+            output.append(result[1])
             continue
 
     # TypeF handling
