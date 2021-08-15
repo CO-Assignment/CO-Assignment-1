@@ -63,7 +63,8 @@ for line in stdin:
     # linecounter += 1
 
     # TODO: #1 Make sure each instruction resets the FLAG variable
-
+if "hlt" not in instructions[-1]:
+    raise Exception("Missing or impropper Hlt use")
 count = 0
 for i in instructions:
     if "var" not in i:
