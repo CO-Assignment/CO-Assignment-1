@@ -3,6 +3,7 @@ from definitions import (instructions, flags, labels, variables, output,
 from typex import TypeA, TypeB, TypeC, TypeD, TypeE
 from sys import stdin
 from checker import checkA, checkB, checkC, checkD, checkE
+from checker2 import checkA2, checkB2, checkC2, checkD2, checkE2
 
 varsDone = False
 # linecounter = 0
@@ -63,8 +64,25 @@ for line in stdin:
     # linecounter += 1
 
     # TODO: #1 Make sure each instruction resets the FLAG variable
+
 if "hlt" not in instructions[-1]:
     raise Exception("Missing or impropper Hlt use")
+
+for i in instructions:
+    i = i .split(" ")
+    lol = list(opcodes.keys())
+    lol.remove("movI")
+    lol.remove("movR")
+    lol.append("mov")
+    if i[0] in lol:
+        if checkA2 or checkB2 or checkC2 or checkD2 or checkE2:
+            continue
+        else:
+            raise Exception("LoL")
+    else:
+        raise Exception("LoL 2")
+
+
 count = 0
 for i in instructions:
     if "var" not in i:
