@@ -7,16 +7,18 @@ from checker import checkA, checkB, checkC, checkD, checkE
 varsDone = False
 # linecounter = 0
 hltReached = False
+tempLineNo = 0
 for line in stdin:
+    tempLineNo += 1
     line = line.strip()
     if hltReached:
 
         if line != '':
-            raise Exception("hlt should be the last instruction")
+            raise Exception(f"Error in line no {tempLineNo}: hlt should be the last instruction")
         break
 
     if len(instructions) == 256:
-        raise Exception("Memory overflow! 256 lines limit has been reached!")
+        raise Exception(f"Error in line no {tempLineNo}: Memory overflow! 256 lines limit has been reached!")
 
     if line == "":
         continue
@@ -25,7 +27,7 @@ for line in stdin:
         varsDone = True
 
     elif varsDone is True and line[0:3] == "var":
-        raise Exception("Variables should only be declared in the starting.")
+        raise Exception(f"Error in line no {tempLineNo}: Variables should only be declared in the starting.")
 
     if "hlt" in str(line):
 
@@ -34,8 +36,7 @@ for line in stdin:
 
             indexToSplit = line.index(":")
             if(" " in line[0:indexToSplit]):
-                raise Exception("""cannot have space
-                between label name and \":\" """)
+                raise Exception(""f"Error in line no {tempLineNo}cannot have space between label name and \":\" """)
             labels[line[0:indexToSplit]] = lineNo
             instructions.append((line[indexToSplit + 1:]).strip())
         else:
@@ -49,7 +50,7 @@ for line in stdin:
         # TODO: #2 this should be len(instructions) - 1
         indexToSplit = line.index(":")
         if(" " in line[0:indexToSplit]):
-            raise Exception("cannot have space between label name and \":\"")
+            raise Exception(f"Error in line no {tempLineNo}: cannot have space between label name and \":\"")
         labels[line[0:indexToSplit]] = lineNo
         instructions.append((line[indexToSplit + 1:]).strip())
         continue
@@ -75,7 +76,7 @@ for i in range(count):
     # TODO: Illegal variable error handling
     # TODO: Viva
     if (len(k) != 2):
-        raise Exception("Invalid syntax for variable declaration ")
+        raise Exception(f"Error in line {i+1} Invalid syntax for variable declaration ")
     variables[k[1]] = numberOfLines + i
     variablesStored[k[1]] = 0
 
@@ -109,32 +110,32 @@ while j < len(realInstructions):
         or curOp == "or"
         or curOp == "and"
     ) and checkA(i):
-        output.append(TypeA(i))
+        output.append(TypeA(i,j))
 
     # Type B handling
     # handling mov
     elif curOp == "mov":
-        if "$" in i[-1] and checkB(i):
-            output.append(TypeB(i))
+        if "$" in i[-1] and checkB(i, j):
+            output.append(TypeB(i, j))
         elif checkC(i):
-            output.append(TypeC(i))
+            output.append(TypeC(i, j))
 
     # handling rest of TypeB
-    elif ((curOp == "rs" or curOp == "ls") and checkB(i)):
-        output.append(TypeB(i))
+    elif ((curOp == "rs" or curOp == "ls") and checkB(i, j)):
+        output.append(TypeB(i, j))
 
     # TypeC handling
-    elif (curOp == "div" or curOp == "not" or curOp == "cmp") and checkC(i):
-        output.append(TypeC(i))
+    elif (curOp == "div" or curOp == "not" or curOp == "cmp") and checkC(i, j):
+        output.append(TypeC(i, j))
 
     # TypeD handling
-    elif (curOp == "ld" or curOp == "st") and checkD(i):
-        output.append(TypeD(i))
+    elif (curOp == "ld" or curOp == "st") and checkD(i,j):
+        output.append(TypeD(i, j))
 
     # TypeE handling
     elif ((curOp == "jmp") or (curOp == "jlt") or (curOp == "jgt")
-            or (curOp == "je")) and checkE(i):
-        result = TypeE(i, currFlagState)
+            or (curOp == "je")) and checkE(i, j):
+        result = TypeE(i, currFlagState, j)
         if result[0] == -1:
             output.append(result[1])
         else:
@@ -148,7 +149,7 @@ while j < len(realInstructions):
 
     # Unexpected Values handling
     else:
-        raise Exception("Unexpected OpCode provided")
+        raise Exception(f"Unexpected OpCode provided at line {j+1+len(variables)}")
 
     j += 1
 
