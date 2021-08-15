@@ -1,8 +1,10 @@
-from definitions import *
-from helpers import *
+from definitions import (flags, labels, variables, Register,
+                         opcodes, registerStored, variablesStored)
+
+from helpers import convertToBin, convertToDecimal
 
 
-def TypeA(inst):
+def TypeA(inst, j):
     toRet = ""
     partWise = inst
 
@@ -17,7 +19,9 @@ def TypeA(inst):
             or (regNo2 not in registerStored)
             or (resultRegNo not in registerStored)
         ):
-            raise Exception("Invalid register provided")
+            raise Exception(f"Error in line no {j+1+len(variables)}: Invalid register provided")
+        if "FLAGS" in partWise:
+            raise Exception(f"Error in line no {j+1+len(variables)}: FLAGS register cannot be used for a Type A instruction.")
         toRet += convertToBin(int(resultRegNo[-1:]), 3)
         toRet += convertToBin(int(regNo1[-1:]), 3)
         toRet += convertToBin(int(regNo2[-1:]), 3)
@@ -39,10 +43,12 @@ def TypeA(inst):
             if result < 0:
                 result = 0
                 flags[0] = True
+
         elif partWise[0] == "mul":
             result = operand1 * operand2
 
-            # Handled overflow for multiplication and addition. Tested from my side. You guys also check once.
+            # Handled overflow for multiplication and addition.
+            # Tested from my side. You guys also check once.
             resInBin = convertToBin(result, 16)
             if len(resInBin) > 16:
                 resInBin = resInBin[-16:]
@@ -57,31 +63,39 @@ def TypeA(inst):
             result = operand1 & operand2
         registerStored[resultRegNo] = result
     else:
-        raise Exception("Illegal type A instruction")
+        raise Exception(f"Error in line no {j+1+len(variables)}: Illegal type A instruction")
 
     return toRet
 
 
-def TypeB(value):
+def TypeB(value, j):
     caller = "movI" if (value[0] == "mov") else value[0]
-    recBin = decimalToBinary(int(value[-1].split("$")[-1]))
+    imm = int(value[-1].split("$")[-1])
+    if(imm > 255) or (imm < 0):
+        raise Exception(f"Error in line no {j+1+len(variables)}: The immediate value has to be in the inclusive range of 0 and 255")
+    recBin = convertToBin(imm, 8)
+    toshift = str(convertToBin(registerStored[value[1]], 16))
+    shiftby = "0" * imm
 
-    noToStore = int(value[-1].split("$")[-1])
+    if caller == "movI":
+        answer = imm
 
-    registerStored[value[1]] = noToStore
+    elif caller == "ls":
+        tocrop = toshift + shiftby
+        answer = tocrop[-16:]
+        answer = convertToDecimal(answer)
 
-    recBin = [str(x) for x in str(recBin)]
+    elif caller == "rs":
+        tocrop = shiftby + toshift
+        answer = tocrop[:16]
+        answer = convertToDecimal(answer)
 
-    finalBin = ["0" * (8 - len(recBin))]
-    finalBin += recBin
-    immBinary = ""
-    for i in finalBin:
-        immBinary += i
-    mainBinary = opcodes[caller] + Register[value[1]] + immBinary
+    registerStored[value[1]] = answer
+    mainBinary = opcodes[caller] + Register[value[1]] + recBin
     return mainBinary
 
 
-def checkTypeC(inst):
+def checkTypeC(inst, j):
     if len(inst) == 3 and (
         (inst[1] == flags or inst[1] in Register)
         or (inst[1] == flags or inst[2] in Register)
@@ -94,21 +108,22 @@ def checkTypeC(inst):
             if inst[2] in Register.keys():
                 return True
             else:
-                raise Exception(inst[2] + " is not a valid register")
+                raise Exception(f"Error in line no {j+1+len(variables)}: {inst[2]} is not a valid register")
         else:
-            raise Exception(inst[1] + "is not  valid register")
+            raise Exception(f"Error in line no {j+1+len(variables)}:inst[1] is not  valid register")
     else:
-        raise Exception(inst[0] + "is not a valid opcode")
+        raise Exception(f"Error in line no {j+1+len(variables)}: inst[0] is not a valid opcode")
 
     return False
 
 
-def TypeC(inst):
+def TypeC(inst, j):
 
     if inst[0] == "mov":
         registerStored[inst[1]] = registerStored[inst[2]]
         return (
-            opcodes[inst[0] + "R"] + ("0" * 5) + Register[inst[1]] + Register[inst[2]]
+            opcodes[inst[0] + "R"] + ("0" * 5)
+            + Register[inst[1]] + Register[inst[2]]
         )
 
     elif inst[0] == "cmp":
@@ -126,31 +141,45 @@ def TypeC(inst):
         registerStored["R0"] = quotient
         registerStored["R1"] = remainder
     elif inst[0] == "not":
-        registerStored[inst[2]] = ~registerStored[inst[1]]
+        
+        noToFlip = convertToBin(registerStored[inst[2]], 16)
+        
+        inverting = ""
+        for ch in range(len(noToFlip)):
+            if(noToFlip[ch] == "1"):
+                inverting = inverting + "0"
+            else:
+                inverting = inverting + "1"
+        
+        flippedNo = convertToDecimal(inverting)
+        
+        registerStored[inst[1]] = flippedNo
 
     return opcodes[inst[0]] + ("0" * 5) + Register[inst[1]] + Register[inst[2]]
 
 
-def TypeD(inst):
-
-    # mainBinary = opcodes[value[0]] + Register[value[1]] + variables.get(value[-1])
+def TypeD(inst, j):
+    if inst[1] == "FLAGS":
+        raise Exception(f"Error in line no {j+1+len(variables)}: ld and st are invalid commands for the FLAGS register.")
     if inst[0] == "ld":
         registerStored[inst[1]] = variablesStored[inst[2]]
+
     if inst[0] == "st":
         variablesStored[inst[2]] = registerStored[inst[1]]
     return (
-        opcodes[inst[0]] + Register[inst[1]] + convertToBin(int(variables[inst[2]]), 8)
+        opcodes[inst[0]] + Register[inst[1]]
+        + convertToBin(int(variables[inst[2]]), 8)
     )
 
 
-def TypeE(inst, flagsC):
+def TypeE(inst, flagsC, j):
     toRet = ""
     lineToJump = -1
     toRet += opcodes[inst[0]]
     toRet += "0" * 3
 
     if inst[1] not in labels.keys():
-        raise Exception("Illegal label specified")
+        raise Exception(f"Error in line no {j+1+len(variables)}:Illegal label specified")
 
     if inst[0] == "je":
         if flagsC[-1]:
