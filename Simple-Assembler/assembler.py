@@ -109,7 +109,7 @@ while j < len(realInstructions):
         or curOp == "xor"
         or curOp == "or"
         or curOp == "and"
-    ) and checkA(i):
+    ) and checkA(i, j):
         output.append(TypeA(i,j))
 
     # Type B handling
@@ -117,7 +117,7 @@ while j < len(realInstructions):
     elif curOp == "mov":
         if "$" in i[-1] and checkB(i, j):
             output.append(TypeB(i, j))
-        elif checkC(i):
+        elif checkC(i, j):
             output.append(TypeC(i, j))
 
     # handling rest of TypeB

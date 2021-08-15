@@ -4,7 +4,7 @@ from definitions import (flags, labels, variables, Register,
 from helpers import convertToBin, convertToDecimal
 
 
-def TypeA(inst):
+def TypeA(inst, j):
     toRet = ""
     partWise = inst
 
@@ -19,10 +19,9 @@ def TypeA(inst):
             or (regNo2 not in registerStored)
             or (resultRegNo not in registerStored)
         ):
-            raise Exception("Invalid register provided")
+            raise Exception(f"Error in line no {j+1}: Invalid register provided")
         if "FLAGS" in partWise:
-            raise Exception("""FLAGS register cannot be used
-                             for a Type A instruction.""")
+            raise Exception(f"Error in line no {j+1}: FLAGS register cannot be used for a Type A instruction.")
         toRet += convertToBin(int(resultRegNo[-1:]), 3)
         toRet += convertToBin(int(regNo1[-1:]), 3)
         toRet += convertToBin(int(regNo2[-1:]), 3)
@@ -64,17 +63,16 @@ def TypeA(inst):
             result = operand1 & operand2
         registerStored[resultRegNo] = result
     else:
-        raise Exception("Illegal type A instruction")
+        raise Exception(f"Error in line no {j+1}: Illegal type A instruction")
 
     return toRet
 
 
-def TypeB(value):
+def TypeB(value, j):
     caller = "movI" if (value[0] == "mov") else value[0]
     imm = int(value[-1].split("$")[-1])
     if(imm > 255) or (imm < 0):
-        raise Exception("""The immediate value has to be in the inclusive
-         range of 0 and 255""")
+        raise Exception(f"Error in line no {j+1}: The immediate value has to be in the inclusive range of 0 and 255")
     recBin = convertToBin(imm, 8)
     toshift = str(convertToBin(registerStored[value[1]], 16))
     shiftby = "0" * imm
@@ -97,7 +95,7 @@ def TypeB(value):
     return mainBinary
 
 
-def checkTypeC(inst):
+def checkTypeC(inst, j):
     if len(inst) == 3 and (
         (inst[1] == flags or inst[1] in Register)
         or (inst[1] == flags or inst[2] in Register)
@@ -110,16 +108,16 @@ def checkTypeC(inst):
             if inst[2] in Register.keys():
                 return True
             else:
-                raise Exception(inst[2] + " is not a valid register")
+                raise Exception(f"Error in line no {j+1}: {inst[2]} is not a valid register")
         else:
-            raise Exception(inst[1] + "is not  valid register")
+            raise Exception(f"Error in line no {j+1}:inst[1] is not  valid register")
     else:
-        raise Exception(inst[0] + "is not a valid opcode")
+        raise Exception(f"Error in line no {j+1}: inst[0] is not a valid opcode")
 
     return False
 
 
-def TypeC(inst):
+def TypeC(inst, j):
 
     if inst[0] == "mov":
         registerStored[inst[1]] = registerStored[inst[2]]
@@ -160,10 +158,9 @@ def TypeC(inst):
     return opcodes[inst[0]] + ("0" * 5) + Register[inst[1]] + Register[inst[2]]
 
 
-def TypeD(inst):
+def TypeD(inst, j):
     if inst[1] == "FLAGS":
-        raise Exception("""ld and st are invalid
-                         commands for the FLAGS register.""")
+        raise Exception(f"Error in line no {j+1}: ld and st are invalid commands for the FLAGS register.")
     if inst[0] == "ld":
         registerStored[inst[1]] = variablesStored[inst[2]]
 
@@ -175,14 +172,14 @@ def TypeD(inst):
     )
 
 
-def TypeE(inst, flagsC):
+def TypeE(inst, flagsC, j):
     toRet = ""
     lineToJump = -1
     toRet += opcodes[inst[0]]
     toRet += "0" * 3
 
     if inst[1] not in labels.keys():
-        raise Exception("Illegal label specified")
+        raise Exception(f"Error in line no {j+1}:Illegal label specified")
 
     if inst[0] == "je":
         if flagsC[-1]:
