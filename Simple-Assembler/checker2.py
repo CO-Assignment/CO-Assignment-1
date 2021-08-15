@@ -73,3 +73,9 @@ def checkE2(inst, j):
             return False
         return False
     return True
+    
+def checkVar(inst):
+    if(len(inst) == 2):
+        return True
+    else:
+        return False
