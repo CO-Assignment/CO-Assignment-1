@@ -74,9 +74,8 @@ for i in instructions:
     lol.remove("movI")
     lol.remove("movR")
     lol.append("mov")
-
     if i[0] in lol:
-        if checkA2(i) or checkB2(i) or checkC2(i) or checkD2(i) or checkE2(i) or checkVar(i):
+        if checkA2 or checkB2 or checkC2 or checkD2 or checkE2:
             continue
         else:
             raise Exception("LoL")
