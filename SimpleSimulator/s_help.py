@@ -31,3 +31,8 @@ def pc_reg_dump(prog_count):
     for reg_vals in registerStored.values():
         print(convertToBin(reg_vals,16), end = " ")
     print()
+
+
+def memory_dump(mem):
+    for m in range(len(mem)):
+        print(mem[m])

@@ -34,3 +34,4 @@ while(pc<len(memory)):
     pc += 1
     
 
+memory_dump(memory)
