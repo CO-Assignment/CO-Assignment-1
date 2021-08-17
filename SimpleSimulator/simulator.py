@@ -21,6 +21,8 @@ for line in stdin:
 while(pc<len(memory)):
     pc_print = convertToBin(pc,8)
     # converts the program counter to 8 bit binary
+    currFlag = registerStored["111"]
+    registerStored["111"] = 0
     op = memory[pc][0:5]
 
     if((opcodes[op] == "add") or (opcodes[op] == "sub") or 
