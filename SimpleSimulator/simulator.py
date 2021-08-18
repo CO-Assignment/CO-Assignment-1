@@ -36,8 +36,10 @@ while(pc<len(memory)):
     or (opcodes[op] == "and")):
         sTypeA(memory[pc])
 
-    if((opcodes[op] == "ld") or (opcodes[op] == "st")):
+    elif((opcodes[op] == "ld") or (opcodes[op] == "st")):
         sTypeD(memory[pc])
+
+    
 
     pc_reg_dump(pc_print)
 
