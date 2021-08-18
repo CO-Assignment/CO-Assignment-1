@@ -15,16 +15,20 @@ for line in stdin:
     memory.append(line)
 
 while(len(memory) <256 ):
-    memory.append(convertToBin(0,8))  
+    memory.append(convertToBin(0,16))  
 
 
-
+stopCode = False
 while(pc<len(memory)):
+    if stopCode:
+        break
     pc_print = convertToBin(pc,8)
     # converts the program counter to 8 bit binary
     currFlag = registerStored["111"]
     registerStored["111"] = 0
     op = memory[pc][0:5]
+    if(opcodes[op] == "hlt"):
+        stopCode = True
 
     if((opcodes[op] == "add") or (opcodes[op] == "sub") or 
     (opcodes[op] == "mul") or (opcodes[op] == "xor") or (opcodes[op] == "or") 
@@ -32,6 +36,7 @@ while(pc<len(memory)):
         sTypeA(memory[pc])
 
     pc_reg_dump(pc_print)
+
     pc += 1
     
 
