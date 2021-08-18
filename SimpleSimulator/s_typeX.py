@@ -58,11 +58,11 @@ def sTypeD(i):
     reg = i[5:8]
     location = convertToDecimal(i[8:])
     valueToStore = registerStored[reg]
-    valueToLoad = memory[location]
+    valueToLoad = convertToDecimal(memory[location])
 
 
     if(opcodes[opcode] == "st"):
-        memory[location] = valueToStore
+        memory[location] = convertToBin(valueToStore, 16)
 
     elif (opcodes[opcode] == "ld"):
         registerStored[reg] = valueToLoad

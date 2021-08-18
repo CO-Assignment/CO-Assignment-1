@@ -11,6 +11,7 @@ for line in stdin:
     
     # TODO: remove the below two lines before submission (only for testing)
     if line == "s":
+        memory.append("1001100000000000")
         break 
     memory.append(line)
 
