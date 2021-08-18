@@ -54,7 +54,19 @@ def sTypeC(i):
     pass
 
 def sTypeD(i):
-    pass
+    opcode = i[0:5]
+    reg = i[5:8]
+    location = convertToDecimal(i[8:])
+    valueToStore = registerStored[reg]
+    valueToLoad = memory[location]
+
+
+    if(opcodes[opcode] == "st"):
+        memory[location] = valueToStore
+
+    elif (opcodes[opcode] == "ld"):
+        registerStored[reg] = valueToLoad
+        
 
 def sTypeE(i):
     pass

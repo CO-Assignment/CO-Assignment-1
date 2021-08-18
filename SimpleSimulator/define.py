@@ -1,4 +1,5 @@
 pc = 0
+memory = []
 opcodes = {
     "00000":"add",
     "00001":"sub",

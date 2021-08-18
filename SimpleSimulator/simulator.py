@@ -3,7 +3,7 @@ from s_help import *
 from define import *
 from s_typeX import *
 
-memory = []
+
 for line in stdin:
     line = line.strip()
     if(line == ""):
@@ -34,6 +34,9 @@ while(pc<len(memory)):
     (opcodes[op] == "mul") or (opcodes[op] == "xor") or (opcodes[op] == "or") 
     or (opcodes[op] == "and")):
         sTypeA(memory[pc])
+
+    if((opcodes[op] == "ld") or (opcodes[op] == "st")):
+        sTypeD(memory[pc])
 
     pc_reg_dump(pc_print)
 
