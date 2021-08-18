@@ -14,7 +14,8 @@ for line in stdin:
         break 
     memory.append(line)
 
-    
+while(len(memory) <256 ):
+    memory.append(convertToBin(0,8))  
 
 
 
