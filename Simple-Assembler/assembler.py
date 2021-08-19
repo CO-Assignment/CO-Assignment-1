@@ -1,5 +1,13 @@
-from definitions import (instructions, flags, labels, variables, output,
-                         opcodes, registerStored, variablesStored)
+from definitions import (
+    instructions,
+    flags,
+    labels,
+    variables,
+    output,
+    opcodes,
+    registerStored,
+    variablesStored,
+)
 from typex import TypeA, TypeB, TypeC, TypeD, TypeE
 from sys import stdin
 from checker import checkA, checkB, checkC, checkD, checkE
@@ -13,12 +21,16 @@ for line in stdin:
     line = line.strip()
     if hltReached:
 
-        if line != '':
-            raise Exception(f"Error in line no {tempLineNo}: hlt should be the last instruction")
+        if line != "":
+            raise Exception(
+                f"Error in line no {tempLineNo}: hlt should be the last instruction"
+            )
         break
 
     if len(instructions) == 256:
-        raise Exception(f"Error in line no {tempLineNo}: Memory overflow! 256 lines limit has been reached!")
+        raise Exception(
+            f"Error in line no {tempLineNo}: Memory overflow! 256 lines limit has been reached!"
+        )
 
     if line == "":
         continue
@@ -27,7 +39,9 @@ for line in stdin:
         varsDone = True
 
     elif varsDone is True and line[0:3] == "var":
-        raise Exception(f"Error in line no {tempLineNo}: Variables should only be declared in the starting.")
+        raise Exception(
+            f"Error in line no {tempLineNo}: Variables should only be declared in the starting."
+        )
 
     if "hlt" in str(line):
 
@@ -35,10 +49,14 @@ for line in stdin:
             lineNo = len(instructions)
 
             indexToSplit = line.index(":")
-            if(" " in line[0:indexToSplit]):
-                raise Exception(""f"Error in line no {tempLineNo}cannot have space between label name and \":\" """)
+            if " " in line[0:indexToSplit]:
+                raise Exception(
+                    ""
+                    f'Error in line no {tempLineNo}cannot have space between label name and ":" '
+                    ""
+                )
             labels[line[0:indexToSplit]] = lineNo
-            instructions.append((line[indexToSplit + 1:]).strip())
+            instructions.append((line[indexToSplit + 1 :]).strip())
         else:
             instructions.append(line)
 
@@ -49,10 +67,12 @@ for line in stdin:
         lineNo = len(instructions)
         # TODO: #2 this should be len(instructions) - 1
         indexToSplit = line.index(":")
-        if(" " in line[0:indexToSplit]):
-            raise Exception(f"Error in line no {tempLineNo}: cannot have space between label name and \":\"")
+        if " " in line[0:indexToSplit]:
+            raise Exception(
+                f'Error in line no {tempLineNo}: cannot have space between label name and ":"'
+            )
         labels[line[0:indexToSplit]] = lineNo
-        instructions.append((line[indexToSplit + 1:]).strip())
+        instructions.append((line[indexToSplit + 1 :]).strip())
         continue
 
     # TODO: #7 major error handling left
@@ -76,7 +96,7 @@ for i in range(count):
     k = (instructions[i]).split()
     # TODO: Illegal variable error handling
     # TODO: Viva
-    if (len(k) != 2):
+    if len(k) != 2:
         raise Exception(f"Error in line {i+1} Invalid syntax for variable declaration ")
     variables[k[1]] = numberOfLines + i
     variablesStored[k[1]] = 0
@@ -111,7 +131,7 @@ while j < len(realInstructions):
         or curOp == "or"
         or curOp == "and"
     ) and checkA(i, j):
-        output.append(TypeA(i,j))
+        output.append(TypeA(i, j))
 
     # Type B handling
     # handling mov
@@ -122,7 +142,7 @@ while j < len(realInstructions):
             output.append(TypeC(i, j))
 
     # handling rest of TypeB
-    elif ((curOp == "rs" or curOp == "ls") and checkB(i, j)):
+    elif (curOp == "rs" or curOp == "ls") and checkB(i, j):
         output.append(TypeB(i, j))
 
     # TypeC handling
@@ -130,12 +150,13 @@ while j < len(realInstructions):
         output.append(TypeC(i, j))
 
     # TypeD handling
-    elif (curOp == "ld" or curOp == "st") and checkD(i,j):
+    elif (curOp == "ld" or curOp == "st") and checkD(i, j):
         output.append(TypeD(i, j))
 
     # TypeE handling
-    elif ((curOp == "jmp") or (curOp == "jlt") or (curOp == "jgt")
-            or (curOp == "je")) and checkE(i, j):
+    elif (
+        (curOp == "jmp") or (curOp == "jlt") or (curOp == "jgt") or (curOp == "je")
+    ) and checkE(i, j):
         result = TypeE(i, currFlagState, j)
         if result[0] == -1:
             output.append(result[1])
