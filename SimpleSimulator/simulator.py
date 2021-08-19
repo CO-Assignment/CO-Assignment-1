@@ -11,23 +11,24 @@ for line in stdin:
     
     # TODO: remove the below two lines before submission (only for testing)
     if line == "s":
-        memory.append("1001100000000000")
+        # memory.append("1001100000000000")
         break 
     memory.append(line)
 
 while(len(memory) <256 ):
-    memory.append(convertToBin(0,16))  
+    memory.append(convertToBin(0,16))
 
 
 stopCode = False
 while(pc<len(memory)):
+ 
     if stopCode:
         break
     pc_print = convertToBin(pc,8)
     currFlagR = registerStored["111"]
     registerStored["111"] = 0
     # converts the program counter to 8 bit binary
-    currFlag = registerStored["111"]
+    currFlagR = registerStored["111"]
     registerStored["111"] = 0
     op = memory[pc][0:5]
     if(opcodes[op] == "hlt"):
@@ -41,12 +42,18 @@ while(pc<len(memory)):
     elif ((opcodes[op] == "cmp") or (opcodes[op] == "movR") or (opcodes[op] == "div") or (opcodes[op] == "not")):
         sTypeC(memory[pc], currFlagR)
 
-    elif((opcodes[op] == "ld") or (opcodes[op] == "st")):
-        sTypeD(memory[pc])
-
     elif((opcodes[op] == "movI") or (opcodes[op] == "ls") or (opcodes[op] =="rs")):
         sTypeB(memory[pc])
 
+ 
+    elif((opcodes[op] == "ld") or (opcodes[op] == "st")):
+        sTypeD(memory[pc])
+
+    elif ((opcodes[op] == "jmp") or (opcodes[op] == "jgt") or (opcodes[op] == "jlt")
+    or (opcodes[op] == "je")):
+        pc = sTypeE(memory[pc], currFlagR, pc)
+        pc_reg_dump(pc_print)
+        continue
     
 
     pc_reg_dump(pc_print)

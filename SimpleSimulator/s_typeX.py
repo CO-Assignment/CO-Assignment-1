@@ -95,6 +95,8 @@ def sTypeC(i, currFlag):
         
         registerStored[reg1] = flippedNo
 
+
+
     elif (opcodes[opcode] == "div"):
         quotient = (registerStored[reg1]) // (registerStored[reg2])
         remainder = registerStored[reg1] % registerStored[reg2]
@@ -122,5 +124,27 @@ def sTypeD(i):
         registerStored[reg] = valueToLoad
         
 
-def sTypeE(i):
-    pass
+def sTypeE(i,currFlag, progc):
+    
+    opcode = i[0:5]
+    location = convertToDecimal(i[8:])
+    if(opcodes[opcode] == "jmp"):
+        progc = location
+
+    elif (opcodes[opcode] == "jgt"):
+        if(currFlag == 2):
+            progc = location
+        else:
+            progc += 1
+    elif (opcodes[opcode] == "jlt"):
+        if(currFlag == 4):
+            progc = location
+        else:
+            progc += 1
+    elif (opcodes[opcode] == "je"):
+        if(currFlag == 1):
+            progc = location
+        else:
+            progc += 1
+    return progc
+
