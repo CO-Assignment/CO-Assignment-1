@@ -26,7 +26,7 @@ while(pc<len(memory)):
         break
     pc_print = convertToBin(pc,8)
     currFlagR = registerStored["111"]
-    registerStored["111"] = 0
+    # registerStored["111"] = 0
     # converts the program counter to 8 bit binary
     currFlagR = registerStored["111"]
     registerStored["111"] = 0
