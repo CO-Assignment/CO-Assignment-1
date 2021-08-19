@@ -44,6 +44,9 @@ while(pc<len(memory)):
     elif((opcodes[op] == "ld") or (opcodes[op] == "st")):
         sTypeD(memory[pc])
 
+    elif((opcodes[op] == "movI") or (opcodes[op] == "ls") or (opcodes[op] =="rs")):
+        sTypeB(memory[pc])
+
     
 
     pc_reg_dump(pc_print)

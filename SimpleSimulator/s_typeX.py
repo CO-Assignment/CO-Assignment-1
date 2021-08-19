@@ -48,7 +48,24 @@ def sTypeA(i):
 
 
 def sTypeB(i):
-    pass
+    opcode = i[0:5]
+    reg = i[5:8]
+    immediate = convertToDecimal(i[8:])
+    toShift = convertToBin(registerStored[reg], 16)
+    shiftBy = "0"*immediate
+    if (opcodes[opcode] == "movI"):
+        registerStored[reg] = immediate
+
+    elif (opcodes[opcode] == "ls"):
+        result = toShift + shiftBy
+        result = result[-16:]
+        registerStored[reg] = convertToDecimal(result)
+
+
+    elif (opcodes[opcode] == "rs"):
+        result = shiftBy + toShift
+        result = result[0:16]
+        registerStored[reg] = convertToDecimal(result)
 
 def sTypeC(i, currFlag):
     opcode = i[0:5]
@@ -89,6 +106,7 @@ def sTypeC(i, currFlag):
             registerStored[reg1] = currFlag
             return
         registerStored[reg1] = registerStored[reg2]
+        
 def sTypeD(i):
     opcode = i[0:5]
     reg = i[5:8]
