@@ -24,6 +24,8 @@ while(pc<len(memory)):
     if stopCode:
         break
     pc_print = convertToBin(pc,8)
+    currFlagR = registerStored["111"]
+    registerStored["111"] = 0
     # converts the program counter to 8 bit binary
     currFlag = registerStored["111"]
     registerStored["111"] = 0
@@ -35,6 +37,9 @@ while(pc<len(memory)):
     (opcodes[op] == "mul") or (opcodes[op] == "xor") or (opcodes[op] == "or") 
     or (opcodes[op] == "and")):
         sTypeA(memory[pc])
+
+    elif ((opcodes[op] == "cmp") or (opcodes[op] == "movR") or (opcodes[op] == "div") or (opcodes[op] == "not")):
+        sTypeC(memory[pc], currFlagR)
 
     elif((opcodes[op] == "ld") or (opcodes[op] == "st")):
         sTypeD(memory[pc])
