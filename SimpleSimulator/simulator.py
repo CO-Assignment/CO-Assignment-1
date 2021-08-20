@@ -76,4 +76,7 @@ while(pc<len(memory)):
 memory_dump(memory)
 
 plt.plot(x,y,'o')
-plt.show()
+
+#change this path according to your own laptop
+plt.savefig('/home/naman/CO-Assignment-1/SimpleSimulator/graph.png')
+
