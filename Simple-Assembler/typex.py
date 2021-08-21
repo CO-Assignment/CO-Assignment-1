@@ -27,11 +27,13 @@ def TypeA(inst, j):
             or (resultRegNo not in registerStored)
         ):
             raise Exception(
-                f"Error in line no {j+1+len(variables)}: Invalid register provided"
+                f"""Error in line no {j+1+len(variables)}:
+                 Invalid register provided"""
             )
         if "FLAGS" in partWise:
             raise Exception(
-                f"Error in line no {j+1+len(variables)}: FLAGS register cannot be used for a Type A instruction."
+                f"""Error in line no {j+1+len(variables)}:
+                 FLAGS register cannot be used for a Type A instruction."""
             )
         toRet += convertToBin(int(resultRegNo[-1:]), 3)
         toRet += convertToBin(int(regNo1[-1:]), 3)
@@ -75,7 +77,8 @@ def TypeA(inst, j):
         registerStored[resultRegNo] = result
     else:
         raise Exception(
-            f"Error in line no {j+1+len(variables)}: Illegal type A instruction"
+            f"""Error in line no {j+1+len(variables)}:
+             Illegal type A instruction"""
         )
 
     return toRet
@@ -86,7 +89,8 @@ def TypeB(value, j):
     imm = int(value[-1].split("$")[-1])
     if (imm > 255) or (imm < 0):
         raise Exception(
-            f"Error in line no {j+1+len(variables)}: The immediate value has to be in the inclusive range of 0 and 255"
+            f"""Error in line no {j+1+len(variables)}:
+            The immediate value has to be in the inclusive range of 0 & 255"""
         )
     recBin = convertToBin(imm, 8)
     toshift = str(convertToBin(registerStored[value[1]], 16))
@@ -124,15 +128,18 @@ def checkTypeC(inst, j):
                 return True
             else:
                 raise Exception(
-                    f"Error in line no {j+1+len(variables)}: {inst[2]} is not a valid register"
+                    f"""Error in line no {j+1+len(variables)}:
+                     {inst[2]} is not a valid register"""
                 )
         else:
             raise Exception(
-                f"Error in line no {j+1+len(variables)}:inst[1] is not  valid register"
+                f"""Error in line no {j+1+len(variables)}:
+                 inst[1] is not  valid register"""
             )
     else:
         raise Exception(
-            f"Error in line no {j+1+len(variables)}: inst[0] is not a valid opcode"
+            f"""Error in line no {j+1+len(variables)}:
+             inst[0] is not a valid opcode"""
         )
 
     return False
@@ -143,7 +150,8 @@ def TypeC(inst, j):
     if inst[0] == "mov":
         registerStored[inst[1]] = registerStored[inst[2]]
         return (
-            opcodes[inst[0] + "R"] + ("0" * 5) + Register[inst[1]] + Register[inst[2]]
+            opcodes[inst[0] + "R"] + ("0" * 5) +
+            Register[inst[1]] + Register[inst[2]]
         )
 
     elif inst[0] == "cmp":
@@ -181,7 +189,8 @@ def TypeC(inst, j):
 def TypeD(inst, j):
     if inst[1] == "FLAGS":
         raise Exception(
-            f"Error in line no {j+1+len(variables)}: ld and st are invalid commands for the FLAGS register."
+            f"""Error in line no {j+1+len(variables)}:
+             ld and st are invalid commands for the FLAGS register."""
         )
     if inst[0] == "ld":
         registerStored[inst[1]] = variablesStored[inst[2]]
@@ -189,7 +198,8 @@ def TypeD(inst, j):
     if inst[0] == "st":
         variablesStored[inst[2]] = registerStored[inst[1]]
     return (
-        opcodes[inst[0]] + Register[inst[1]] + convertToBin(int(variables[inst[2]]), 8)
+        opcodes[inst[0]] + Register[inst[1]] +
+        convertToBin(int(variables[inst[2]]), 8)
     )
 
 
