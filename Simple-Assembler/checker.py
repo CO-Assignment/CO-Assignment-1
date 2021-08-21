@@ -31,9 +31,7 @@ def checkB(inst, j):
             f"""Error in line no {j+1+len(variables)}:
              wrong command given for Type B"""
         )
-    if ((inst[1] in Register.keys()) and
-            ("$" in inst[2]) and
-            (int(inst[2][1:]) < 256)):
+    if (inst[1] in Register.keys()) and ("$" in inst[2]) and (int(inst[2][1:]) < 256):
 
         if inst[1] != "FLAGS":
             return True
@@ -68,8 +66,9 @@ def checkC(inst, j):
         return True
     if not (inst[1] in Register.keys()):
         raise Exception(
-            inst[1], f"""Error in line no {j+1+len(variables)}:
-             not a valid register"""
+            inst[1],
+            f"""Error in line no {j+1+len(variables)}:
+             not a valid register""",
         )
     if not (inst[2] in Register.keys()):
         raise Exception(
@@ -117,6 +116,8 @@ def checkE(inst, j):
                 f"""Error in line no {j+1+len(variables)}:
                  Variable specified instead of label"""
             )
-        raise Exception(f"""Error in line no {j+1+len(variables)}:
-                Label does not exist""")
+        raise Exception(
+            f"""Error in line no {j+1+len(variables)}:
+                Label does not exist"""
+        )
     return True
