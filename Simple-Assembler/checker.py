@@ -99,7 +99,7 @@ def checkD(inst, j):
     elif not (inst[2] in variables.keys()):
         raise Exception(
             f"""Error in line no {j+1+len(variables)}:
-             {inst[2]} not a  valid variable"""
+            {inst[2]} not a  valid variable"""
         )
     return False
 
