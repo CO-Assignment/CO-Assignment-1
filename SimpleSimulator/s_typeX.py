@@ -1,6 +1,5 @@
-from define import *
-from s_help import *
-
+from define import (memory, opcodes, registerStored)
+from s_help import (convertToBin, convertToDecimal)
 
 
 def sTypeA(i):
@@ -18,14 +17,13 @@ def sTypeA(i):
             resInBin = resInBin[-16:]
             registerStored["111"] = 8
             result = convertToDecimal(resInBin)
-               
 
     elif(opcodes[opcode] == "sub"):
         result = op1 - op2
         if (result < 0):
             result = 0
             registerStored["111"] = 8
-       
+
     elif(opcodes[opcode] == "mul"):
         result = op1 * op2
         resInBin = convertToBin(result, 16)
@@ -33,18 +31,16 @@ def sTypeA(i):
             resInBin = resInBin[-16:]
             registerStored["111"] = 8
             result = convertToDecimal(resInBin)
-       
+
     elif(opcodes[opcode] == "xor"):
         result = op1 ^ op2
-       
+
     elif(opcodes[opcode] == "or"):
         result = op1 | op2
-        
+
     elif(opcodes[opcode] == "and"):
         result = op1 & op2
     registerStored[dest_reg] = result
-        
-    
 
 
 def sTypeB(i):
@@ -61,11 +57,11 @@ def sTypeB(i):
         result = result[-16:]
         registerStored[reg] = convertToDecimal(result)
 
-
     elif (opcodes[opcode] == "rs"):
         result = shiftBy + toShift
         result = result[0:16]
         registerStored[reg] = convertToDecimal(result)
+
 
 def sTypeC(i, currFlag):
     opcode = i[0:5]
@@ -83,19 +79,17 @@ def sTypeC(i, currFlag):
 
     elif (opcodes[opcode] == "not"):
         noToFlip = convertToBin(registerStored[reg2], 16)
-        
+
         inverting = ""
         for ch in range(len(noToFlip)):
             if(noToFlip[ch] == "1"):
                 inverting = inverting + "0"
             else:
                 inverting = inverting + "1"
-        
+
         flippedNo = convertToDecimal(inverting)
-        
+
         registerStored[reg1] = flippedNo
-
-
 
     elif (opcodes[opcode] == "div"):
         quotient = (registerStored[reg1]) // (registerStored[reg2])
@@ -108,7 +102,8 @@ def sTypeC(i, currFlag):
             registerStored[reg1] = currFlag
             return
         registerStored[reg1] = registerStored[reg2]
-        
+
+
 def sTypeD(i):
     opcode = i[0:5]
     reg = i[5:8]
@@ -116,16 +111,15 @@ def sTypeD(i):
     valueToStore = registerStored[reg]
     valueToLoad = convertToDecimal(memory[location])
 
-
     if(opcodes[opcode] == "st"):
         memory[location] = convertToBin(valueToStore, 16)
 
-    elif (opcodes[opcode] == "ld"):
+    elif(opcodes[opcode] == "ld"):
         registerStored[reg] = valueToLoad
-        
 
-def sTypeE(i,currFlag, progc):
-    
+
+def sTypeE(i, currFlag, progc):
+
     opcode = i[0:5]
     location = convertToDecimal(i[8:])
     if(opcodes[opcode] == "jmp"):
@@ -146,5 +140,5 @@ def sTypeE(i,currFlag, progc):
             progc = location
         else:
             progc += 1
-    return progc
 
+    return progc
