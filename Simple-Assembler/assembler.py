@@ -60,7 +60,7 @@ for line in stdin:
                     ""
                 )
             labels[line[0:indexToSplit]] = lineNo
-            instructions.append((line[indexToSplit + 1 :]).strip())
+            instructions.append((line[indexToSplit + 1:]).strip())
         else:
             instructions.append(line)
 
@@ -77,7 +77,7 @@ for line in stdin:
                  cannot have space between label name and ":"'''
             )
         labels[line[0:indexToSplit]] = lineNo
-        instructions.append((line[indexToSplit + 1 :]).strip())
+        instructions.append((line[indexToSplit + 1:]).strip())
         continue
 
     # TODO: #7 major error handling left
@@ -163,7 +163,10 @@ while j < len(realInstructions):
 
     # TypeE handling
     elif (
-        (curOp == "jmp") or (curOp == "jlt") or (curOp == "jgt") or (curOp == "je")
+        (curOp == "jmp") or
+        (curOp == "jlt") or
+        (curOp == "jgt") or
+        (curOp == "je")
     ) and checkE(i, j):
         result = TypeE(i, currFlagState, j)
         if result[0] == -1:
