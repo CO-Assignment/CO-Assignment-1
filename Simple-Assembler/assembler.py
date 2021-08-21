@@ -23,13 +23,15 @@ for line in stdin:
 
         if line != "":
             raise Exception(
-                f"Error in line no {tempLineNo}: hlt should be the last instruction"
+                f"""Error in line no {tempLineNo}:
+                 hlt should be the last instruction"""
             )
         break
 
     if len(instructions) == 256:
         raise Exception(
-            f"Error in line no {tempLineNo}: Memory overflow! 256 lines limit has been reached!"
+            f"""Error in line no {tempLineNo}: Memory overflow!
+             256 lines limit has been reached!"""
         )
 
     if line == "":
@@ -40,7 +42,8 @@ for line in stdin:
 
     elif varsDone is True and line[0:3] == "var":
         raise Exception(
-            f"Error in line no {tempLineNo}: Variables should only be declared in the starting."
+            f"""Error in line no {tempLineNo}:
+             Variables should only be declared in the starting."""
         )
 
     if "hlt" in str(line):
@@ -52,11 +55,12 @@ for line in stdin:
             if " " in line[0:indexToSplit]:
                 raise Exception(
                     ""
-                    f'Error in line no {tempLineNo}cannot have space between label name and ":" '
+                    f'''Error in line no {tempLineNo}cannot
+                     have space between label name and ":" '''
                     ""
                 )
             labels[line[0:indexToSplit]] = lineNo
-            instructions.append((line[indexToSplit + 1 :]).strip())
+            instructions.append((line[indexToSplit + 1:]).strip())
         else:
             instructions.append(line)
 
@@ -69,10 +73,11 @@ for line in stdin:
         indexToSplit = line.index(":")
         if " " in line[0:indexToSplit]:
             raise Exception(
-                f'Error in line no {tempLineNo}: cannot have space between label name and ":"'
+                f'''Error in line no {tempLineNo}:
+                 cannot have space between label name and ":"'''
             )
         labels[line[0:indexToSplit]] = lineNo
-        instructions.append((line[indexToSplit + 1 :]).strip())
+        instructions.append((line[indexToSplit + 1:]).strip())
         continue
 
     # TODO: #7 major error handling left
@@ -97,7 +102,8 @@ for i in range(count):
     # TODO: Illegal variable error handling
     # TODO: Viva
     if len(k) != 2:
-        raise Exception(f"Error in line {i+1} Invalid syntax for variable declaration ")
+        raise Exception(f"""Error in line {i+1}
+         Invalid syntax for variable declaration """)
     variables[k[1]] = numberOfLines + i
     variablesStored[k[1]] = 0
 
@@ -155,7 +161,10 @@ while j < len(realInstructions):
 
     # TypeE handling
     elif (
-        (curOp == "jmp") or (curOp == "jlt") or (curOp == "jgt") or (curOp == "je")
+        (curOp == "jmp")
+        or (curOp == "jlt")
+        or (curOp == "jgt")
+        or (curOp == "je")
     ) and checkE(i, j):
         result = TypeE(i, currFlagState, j)
         if result[0] == -1:
@@ -171,7 +180,8 @@ while j < len(realInstructions):
 
     # Unexpected Values handling
     else:
-        raise Exception(f"Unexpected OpCode provided at line {j+1+len(variables)}")
+        raise Exception(f"""Unexpected OpCode provided
+        at line {j+1+len(variables)}""")
 
     j += 1
 
