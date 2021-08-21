@@ -1,8 +1,8 @@
 import matplotlib.pyplot as plt
 from sys import stdin
-from s_help import *
-from define import *
-from s_typeX import *
+from s_help import (convertToBin, pc_reg_dump, memory_dump)
+from define import (pc, memory, opcodes, registerStored)
+from s_typeX import (sTypeA, sTypeB, sTypeC, sTypeD, sTypeE)
 
 x = []
 y = []
@@ -17,13 +17,12 @@ for line in stdin:
         break
     memory.append(line)
 
-while(len(memory) <256 ):
-    memory.append(convertToBin(0,16))
+while(len(memory) < 256):
+    memory.append(convertToBin(0, 16))
 
 cycleNo = 0
 stopCode = False
-while(pc<len(memory)):
-    
+while(pc < len(memory)):
 
     if stopCode:
         break
@@ -32,7 +31,7 @@ while(pc<len(memory)):
     y.append(pc)
     cycleNo += 1
 
-    pc_print = convertToBin(pc,8)
+    pc_print = convertToBin(pc, 8)
     currFlagR = registerStored["111"]
     # registerStored["111"] = 0
     # converts the program counter to 8 bit binary
@@ -42,31 +41,49 @@ while(pc<len(memory)):
     if(opcodes[op] == "hlt"):
         stopCode = True
 
-    if((opcodes[op] == "add") or (opcodes[op] == "sub") or
-    (opcodes[op] == "mul") or (opcodes[op] == "xor") or (opcodes[op] == "or")
-    or (opcodes[op] == "and")):
+    if(
+        (opcodes[op] == "add") or
+        (opcodes[op] == "sub") or
+        (opcodes[op] == "mul") or
+        (opcodes[op] == "xor") or
+        (opcodes[op] == "or") or
+        (opcodes[op] == "and")
+    ):
         sTypeA(memory[pc])
 
-    elif ((opcodes[op] == "cmp") or (opcodes[op] == "movR") or (opcodes[op] == "div") or (opcodes[op] == "not")):
+    elif (
+            (opcodes[op] == "cmp") or
+            (opcodes[op] == "movR") or
+            (opcodes[op] == "div") or
+            (opcodes[op] == "not")
+         ):
         sTypeC(memory[pc], currFlagR)
 
-    elif((opcodes[op] == "movI") or (opcodes[op] == "ls") or (opcodes[op] =="rs")):
+    elif(
+            (opcodes[op] == "movI") or
+            (opcodes[op] == "ls") or
+            (opcodes[op] == "rs")
+         ):
+
         sTypeB(memory[pc])
 
-
-    elif((opcodes[op] == "ld") or (opcodes[op] == "st")):
+    elif(
+            (opcodes[op] == "ld") or
+            (opcodes[op] == "st")):
         cycleNo -= 1
         x.append(cycleNo)
         y.append(pc)
         cycleNo += 1
         sTypeD(memory[pc])
 
-    elif ((opcodes[op] == "jmp") or (opcodes[op] == "jgt") or (opcodes[op] == "jlt")
-    or (opcodes[op] == "je")):
+    elif(
+            (opcodes[op] == "jmp") or
+            (opcodes[op] == "jgt") or
+            (opcodes[op] == "jlt") or
+            (opcodes[op] == "je")):
         pc = sTypeE(memory[pc], currFlagR, pc)
         pc_reg_dump(pc_print)
         continue
-
 
     pc_reg_dump(pc_print)
 
@@ -75,8 +92,6 @@ while(pc<len(memory)):
 
 memory_dump(memory)
 
-plt.plot(x,y,'o')
+plt.plot(x, y, 'o')
 
-#change this path according to your own laptop
-plt.savefig('/home/naman/CO-Assignment-1/SimpleSimulator/graph.png')
-
+plt.savefig('./graph.png')

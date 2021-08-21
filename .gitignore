@@ -3,6 +3,8 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+SimpleSimulator/graph.png
+
 # C extensions
 *.so
 .idea
