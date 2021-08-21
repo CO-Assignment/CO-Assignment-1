@@ -1,4 +1,6 @@
-from define import *
+from define import (registerStored)
+
+
 def convertToBin(numToCovert, noOfBits):
     if numToCovert == 0:
         return "0" * noOfBits
@@ -26,10 +28,11 @@ def convertToDecimal(bin_str):
             continue
     return toRet
 
+
 def pc_reg_dump(prog_count):
-    print(prog_count, end = " ")
+    print(prog_count, end=" ")
     for reg_vals in registerStored.values():
-        print(convertToBin(reg_vals,16), end = " ")
+        print(convertToBin(reg_vals, 16), end=" ")
     print()
 
 
