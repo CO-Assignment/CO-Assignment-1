@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 from sys import stdin
-from s_help import (convertToBin, pc_reg_dump, memory_dump)
+from s_help import (convertToDecimal, convertToBin, pc_reg_dump, memory_dump)
 from define import (pc, memory, opcodes, registerStored)
 from s_typeX import (sTypeA, sTypeB, sTypeC, sTypeD, sTypeE)
 
@@ -33,8 +33,7 @@ while(pc < len(memory)):
 
     pc_print = convertToBin(pc, 8)
     currFlagR = registerStored["111"]
-    # registerStored["111"] = 0
-    # converts the program counter to 8 bit binary
+    
     currFlagR = registerStored["111"]
     registerStored["111"] = 0
     op = memory[pc][0:5]
@@ -72,7 +71,7 @@ while(pc < len(memory)):
             (opcodes[op] == "st")):
         cycleNo -= 1
         x.append(cycleNo)
-        y.append(pc)
+        y.append(convertToDecimal(memory[pc][-8:]))
         cycleNo += 1
         sTypeD(memory[pc])
 
