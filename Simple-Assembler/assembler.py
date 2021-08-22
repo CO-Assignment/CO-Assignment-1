@@ -80,14 +80,10 @@ for line in stdin:
         instructions.append((line[indexToSplit + 1:]).strip())
         continue
 
-    # TODO: #7 major error handling left
-    # TODO: #8 Make sure that instructions is provided with only correct values
-    #  and thus all syntax error is reported here only
+    
 
     instructions.append(line)
-    # linecounter += 1
-
-    # TODO: #1 Make sure each instruction resets the FLAG variable
+    
 if "hlt" not in instructions[-1]:
     raise Exception("Missing or impropper Hlt use")
 count = 0
@@ -99,8 +95,7 @@ numberOfLines = len(instructions) - count
 
 for i in range(count):
     k = (instructions[i]).split()
-    # TODO: Illegal variable error handling
-    # TODO: Viva
+    
     if len(k) != 2:
         raise Exception(
             f"""Error in line {i+1}
@@ -112,7 +107,7 @@ for i in range(count):
 realInstructions = instructions[count:]
 j = 0
 while j < len(realInstructions):
-    # print(j)
+    
     currFlagState = flags[::]
 
     powerInd = -1
@@ -172,9 +167,9 @@ while j < len(realInstructions):
         if result[0] == -1:
             output.append(result[1])
         else:
-            j = result[0]
+            # j = result[0]
             output.append(result[1])
-            continue
+            # continue
 
     # TypeF handling
     elif curOp == "hlt":
