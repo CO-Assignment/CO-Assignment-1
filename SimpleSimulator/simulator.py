@@ -92,5 +92,7 @@ while(pc < len(memory)):
 memory_dump(memory)
 
 plt.plot(x, y, 'o')
-
+plt.title('Graph showing the memory locations accessed during different cycles')
+plt.xlabel('Cycle No')
+plt.ylabel('Memory location acessed')
 plt.savefig('./graph.png')
