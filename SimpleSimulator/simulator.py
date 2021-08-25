@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+# import random
 from sys import stdin
 from s_help import (convertToDecimal, convertToBin, pc_reg_dump, memory_dump)
 from define import (pc, memory, opcodes, registerStored)
@@ -95,4 +96,10 @@ plt.plot(x, y, 'o')
 plt.title('Graph showing the memory locations accessed during different cycles')
 plt.xlabel('Cycle No')
 plt.ylabel('Memory location acessed')
-plt.savefig('./graph.png')
+plt.savefig('graph.png')
+
+# Uncomment if you wish to generated separate files for the graphs.
+
+# a = random.randint(1,100000)
+# filename = "graph"+str(a)+".png"
+# plt.savefig(filename)
