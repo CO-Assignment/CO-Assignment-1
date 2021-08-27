@@ -56,19 +56,24 @@ for line in stdin:
                      have space between label name and ":" """
                 )
             value23 = line[0:indexToSplit]
-            if(value23 in opcodes.keys()
-                or (not(value23.replace('_', '').isalnum()))
+            if (
+                value23 in opcodes.keys()
+                or (not (value23.replace("_", "").isalnum()))
                 or (value23 == "var")
-              ):
-                raise Exception(f'''Error in line no {tempLineNo}:
-                     Improper name declaration for label ''')
+            ):
+                raise Exception(
+                    f"""Error in line no {tempLineNo}:
+                     Improper name declaration for label """
+                )
 
             labels[line[0:indexToSplit]] = lineNo
-            instructions.append((line[indexToSplit + 1:]).strip())
+            instructions.append((line[indexToSplit + 1 :]).strip())
 
         elif "hlt" != line:
-            raise Exception(f"""Error in line no {tempLineNo}
-                            Improper hlt statement """)
+            raise Exception(
+                f"""Error in line no {tempLineNo}
+                            Improper hlt statement """
+            )
 
         else:
             instructions.append(line)
@@ -86,15 +91,18 @@ for line in stdin:
                  cannot have space between label name and ":"'''
             )
         value23 = line[0:indexToSplit]
-        if(value23 in opcodes.keys()
-            or (not(value23.replace('_', '').isalnum()))
+        if (
+            value23 in opcodes.keys()
+            or (not (value23.replace("_", "").isalnum()))
             or (value23 == "var")
         ):
-            raise Exception(f'''Error in line no {tempLineNo}:
-                 Improper name declaration for label ''')
+            raise Exception(
+                f"""Error in line no {tempLineNo}:
+                 Improper name declaration for label """
+            )
 
         labels[line[0:indexToSplit]] = lineNo
-        instructions.append((line[indexToSplit + 1:]).strip())
+        instructions.append((line[indexToSplit + 1 :]).strip())
         continue
 
     instructions.append(line)
@@ -117,10 +125,11 @@ for i in range(count):
          Invalid syntax for variable declaration """
         )
 
-    if ((k[-1] in opcodes.keys()) or
-            (not(k[-1].replace('_', '').isalnum())) or
-            (k[-1] == "var")
-        ):
+    if (
+        (k[-1] in opcodes.keys())
+        or (not (k[-1].replace("_", "").isalnum()))
+        or (k[-1] == "var")
+    ):
         # print(k[-1])
         raise Exception(
             f"""Error in line {i+1}
@@ -185,10 +194,7 @@ while j < len(realInstructions):
 
     # TypeE handling
     elif (
-        (curOp == "jmp") or
-        (curOp == "jlt") or
-        (curOp == "jgt") or
-        (curOp == "je")
+        (curOp == "jmp") or (curOp == "jlt") or (curOp == "jgt") or (curOp == "je")
     ) and checkE(i, j):
         result = TypeE(i, currFlagState, j)
         if result[0] == -1:

@@ -150,8 +150,7 @@ def TypeC(inst, j):
     if inst[0] == "mov":
         registerStored[inst[1]] = registerStored[inst[2]]
         return (
-            opcodes[inst[0] + "R"] + ("0" * 5) +
-            Register[inst[1]] + Register[inst[2]]
+            opcodes[inst[0] + "R"] + ("0" * 5) + Register[inst[1]] + Register[inst[2]]
         )
 
     elif inst[0] == "cmp":
@@ -198,8 +197,7 @@ def TypeD(inst, j):
     if inst[0] == "st":
         variablesStored[inst[2]] = registerStored[inst[1]]
     return (
-        opcodes[inst[0]] + Register[inst[1]] +
-        convertToBin(int(variables[inst[2]]), 8)
+        opcodes[inst[0]] + Register[inst[1]] + convertToBin(int(variables[inst[2]]), 8)
     )
 
 

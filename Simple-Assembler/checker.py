@@ -31,8 +31,7 @@ def checkB(inst, j):
             f"""Error in line no {j+1+len(variables)}:
              wrong command given for Type B"""
         )
-    if ((inst[1] in Register.keys()) and
-            ("$" in inst[2]) and (int(inst[2][1:]) < 256)):
+    if (inst[1] in Register.keys()) and ("$" in inst[2]) and (int(inst[2][1:]) < 256):
 
         if inst[1] != "FLAGS":
             return True
