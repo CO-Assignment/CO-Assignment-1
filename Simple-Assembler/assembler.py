@@ -1,5 +1,13 @@
-from definitions import (instructions, flags, labels, variables, output,
-                         opcodes, registerStored, variablesStored)
+from definitions import (
+    instructions,
+    flags,
+    labels,
+    variables,
+    output,
+    opcodes,
+    registerStored,
+    variablesStored,
+)
 from typex import TypeA, TypeB, TypeC, TypeD, TypeE
 from sys import stdin
 from checker import checkA, checkB, checkC, checkD, checkE
@@ -13,12 +21,18 @@ for line in stdin:
     line = line.strip()
     if hltReached:
 
-        if line != '':
-            raise Exception(f"Error in line no {tempLineNo}: hlt should be the last instruction")
+        if line != "":
+            raise Exception(
+                f"""Error in line no {tempLineNo}:
+                 hlt should be the last instruction"""
+            )
         break
 
     if len(instructions) == 256:
-        raise Exception(f"Error in line no {tempLineNo}: Memory overflow! 256 lines limit has been reached!")
+        raise Exception(
+            f"""Error in line no {tempLineNo}: Memory overflow!
+             256 lines limit has been reached!"""
+        )
 
     if line == "":
         continue
@@ -27,18 +41,40 @@ for line in stdin:
         varsDone = True
 
     elif varsDone is True and line[0:3] == "var":
-        raise Exception(f"Error in line no {tempLineNo}: Variables should only be declared in the starting.")
-
+        raise Exception(
+            f"""Error in line no {tempLineNo}:
+             Variables should only be declared in the starting."""
+        )
     if "hlt" in str(line):
-
         if ":" in line:
             lineNo = len(instructions)
 
             indexToSplit = line.index(":")
-            if(" " in line[0:indexToSplit]):
-                raise Exception(""f"Error in line no {tempLineNo}cannot have space between label name and \":\" """)
+            if " " in line[0:indexToSplit]:
+                raise Exception(
+                    f"""Error in line no {tempLineNo}cannot
+                     have space between label name and ":" """
+                )
+            value23 = line[0:indexToSplit]
+            if (
+                value23 in opcodes.keys()
+                or (not (value23.replace("_", "").isalnum()))
+                or (value23 == "var")
+            ):
+                raise Exception(
+                    f"""Error in line no {tempLineNo}:
+                     Improper name declaration for label """
+                )
+
             labels[line[0:indexToSplit]] = lineNo
             instructions.append((line[indexToSplit + 1:]).strip())
+
+        elif "hlt" != line:
+            raise Exception(
+                f"""Error in line no {tempLineNo}
+                            Improper hlt statement """
+            )
+
         else:
             instructions.append(line)
 
@@ -49,20 +85,28 @@ for line in stdin:
         lineNo = len(instructions)
         # TODO: #2 this should be len(instructions) - 1
         indexToSplit = line.index(":")
-        if(" " in line[0:indexToSplit]):
-            raise Exception(f"Error in line no {tempLineNo}: cannot have space between label name and \":\"")
+        if " " in line[0:indexToSplit]:
+            raise Exception(
+                f'''Error in line no {tempLineNo}:
+                 cannot have space between label name and ":"'''
+            )
+        value23 = line[0:indexToSplit]
+        if (
+            value23 in opcodes.keys()
+            or (not (value23.replace("_", "").isalnum()))
+            or (value23 == "var")
+        ):
+            raise Exception(
+                f"""Error in line no {tempLineNo}:
+                 Improper name declaration for label """
+            )
+
         labels[line[0:indexToSplit]] = lineNo
         instructions.append((line[indexToSplit + 1:]).strip())
         continue
 
-    # TODO: #7 major error handling left
-    # TODO: #8 Make sure that instructions is provided with only correct values
-    #  and thus all syntax error is reported here only
-
     instructions.append(line)
-    # linecounter += 1
 
-    # TODO: #1 Make sure each instruction resets the FLAG variable
 if "hlt" not in instructions[-1]:
     raise Exception("Missing or impropper Hlt use")
 count = 0
@@ -74,17 +118,32 @@ numberOfLines = len(instructions) - count
 
 for i in range(count):
     k = (instructions[i]).split()
-    # TODO: Illegal variable error handling
-    # TODO: Viva
-    if (len(k) != 2):
-        raise Exception(f"Error in line {i+1} Invalid syntax for variable declaration ")
+
+    if len(k) != 2:
+        raise Exception(
+            f"""Error in line {i+1}
+         Invalid syntax for variable declaration """
+        )
+
+    if (
+        (k[-1] in opcodes.keys())
+        or (not (k[-1].replace("_", "").isalnum()))
+        or (k[-1] == "var")
+    ):
+        # print(k[-1])
+        raise Exception(
+            f"""Error in line {i+1}
+         Improper declaration for variable"""
+        )
+
     variables[k[1]] = numberOfLines + i
     variablesStored[k[1]] = 0
+
 
 realInstructions = instructions[count:]
 j = 0
 while j < len(realInstructions):
-    # print(j)
+
     currFlagState = flags[::]
 
     powerInd = -1
@@ -111,7 +170,7 @@ while j < len(realInstructions):
         or curOp == "or"
         or curOp == "and"
     ) and checkA(i, j):
-        output.append(TypeA(i,j))
+        output.append(TypeA(i, j))
 
     # Type B handling
     # handling mov
@@ -122,7 +181,7 @@ while j < len(realInstructions):
             output.append(TypeC(i, j))
 
     # handling rest of TypeB
-    elif ((curOp == "rs" or curOp == "ls") and checkB(i, j)):
+    elif (curOp == "rs" or curOp == "ls") and checkB(i, j):
         output.append(TypeB(i, j))
 
     # TypeC handling
@@ -130,19 +189,21 @@ while j < len(realInstructions):
         output.append(TypeC(i, j))
 
     # TypeD handling
-    elif (curOp == "ld" or curOp == "st") and checkD(i,j):
+    elif (curOp == "ld" or curOp == "st") and checkD(i, j):
         output.append(TypeD(i, j))
 
     # TypeE handling
-    elif ((curOp == "jmp") or (curOp == "jlt") or (curOp == "jgt")
-            or (curOp == "je")) and checkE(i, j):
+    elif (
+        (curOp == "jmp") or (curOp == "jlt") or (curOp == "jgt")
+        or (curOp == "je")
+            ) and checkE(i, j):
         result = TypeE(i, currFlagState, j)
         if result[0] == -1:
             output.append(result[1])
         else:
-            j = result[0]
+            # j = result[0]
             output.append(result[1])
-            continue
+            # continue
 
     # TypeF handling
     elif curOp == "hlt":
@@ -150,7 +211,10 @@ while j < len(realInstructions):
 
     # Unexpected Values handling
     else:
-        raise Exception(f"Unexpected OpCode provided at line {j+1+len(variables)}")
+        raise Exception(
+            f"""Unexpected OpCode provided
+        at line {j+1+len(variables)}"""
+        )
 
     j += 1
 
