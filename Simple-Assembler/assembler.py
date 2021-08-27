@@ -45,22 +45,31 @@ for line in stdin:
             f"""Error in line no {tempLineNo}:
              Variables should only be declared in the starting."""
         )
-
     if "hlt" in str(line):
-
         if ":" in line:
             lineNo = len(instructions)
 
             indexToSplit = line.index(":")
             if " " in line[0:indexToSplit]:
                 raise Exception(
-                    ""
                     f"""Error in line no {tempLineNo}cannot
                      have space between label name and ":" """
-                    ""
                 )
+            value23 = line[0:indexToSplit]
+            if(value23 in opcodes.keys()
+                or (not(value23.replace('_', '').isalnum()))
+                or (value23 == "var")
+              ):
+                raise Exception(f'''Error in line no {tempLineNo}:
+                     Improper name declaration for label ''')
+
             labels[line[0:indexToSplit]] = lineNo
             instructions.append((line[indexToSplit + 1:]).strip())
+
+        elif "hlt" != line:
+            raise Exception(f"""Error in line no {tempLineNo}
+                            Improper hlt statement """)
+
         else:
             instructions.append(line)
 
@@ -76,14 +85,20 @@ for line in stdin:
                 f'''Error in line no {tempLineNo}:
                  cannot have space between label name and ":"'''
             )
+        value23 = line[0:indexToSplit]
+        if(value23 in opcodes.keys()
+            or (not(value23.replace('_', '').isalnum()))
+            or (value23 == "var")
+        ):
+            raise Exception(f'''Error in line no {tempLineNo}:
+                 Improper name declaration for label ''')
+
         labels[line[0:indexToSplit]] = lineNo
         instructions.append((line[indexToSplit + 1:]).strip())
         continue
 
-    
-
     instructions.append(line)
-    
+
 if "hlt" not in instructions[-1]:
     raise Exception("Missing or impropper Hlt use")
 count = 0
@@ -95,19 +110,31 @@ numberOfLines = len(instructions) - count
 
 for i in range(count):
     k = (instructions[i]).split()
-    
+
     if len(k) != 2:
         raise Exception(
             f"""Error in line {i+1}
          Invalid syntax for variable declaration """
         )
+
+    if ((k[-1] in opcodes.keys()) or
+            (not(k[-1].replace('_', '').isalnum())) or
+            (k[-1] == "var")
+        ):
+        # print(k[-1])
+        raise Exception(
+            f"""Error in line {i+1}
+         Improper declaration for variable"""
+        )
+
     variables[k[1]] = numberOfLines + i
     variablesStored[k[1]] = 0
+
 
 realInstructions = instructions[count:]
 j = 0
 while j < len(realInstructions):
-    
+
     currFlagState = flags[::]
 
     powerInd = -1
