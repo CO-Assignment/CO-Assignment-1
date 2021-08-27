@@ -2,6 +2,7 @@ from define import (registerStored)
 
 
 def convertToBin(numToCovert, noOfBits):
+    """Function that converts a decimal number to a binary"""
     if numToCovert == 0:
         return "0" * noOfBits
     ans = ""
@@ -30,6 +31,7 @@ def convertToDecimal(bin_str):
 
 
 def pc_reg_dump(prog_count):
+    """Prints the program counter value and all values stored in register."""
     print(prog_count, end=" ")
     for reg_vals in registerStored.values():
         print(convertToBin(reg_vals, 16), end=" ")
@@ -37,5 +39,6 @@ def pc_reg_dump(prog_count):
 
 
 def memory_dump(mem):
+    """Prints the values stored in memory."""
     for m in range(len(mem)):
         print(mem[m])

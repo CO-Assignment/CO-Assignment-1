@@ -1,5 +1,7 @@
 pc = 0
 memory = []
+
+# Dictionary storing opcodes with their corresponding operator
 opcodes = {
     "00000": "add",
     "00001": "sub",
@@ -24,6 +26,7 @@ opcodes = {
 }
 
 
+# Dictionary that stores register values.
 registerStored = {
     "000": 0,
     "001": 0,
