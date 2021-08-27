@@ -44,7 +44,6 @@ def TypeA(inst, j):
         operand2 = registerStored[regNo2]
         result = 0
 
-        # TODO: #4 ERRORS YET TO BE HANDLED
         if partWise[0] == "add":
             result = operand1 + operand2
             resInBin = convertToBin(result, 16)

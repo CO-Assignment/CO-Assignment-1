@@ -83,7 +83,6 @@ for line in stdin:
 
     if ":" in line:
         lineNo = len(instructions)
-        # TODO: #2 this should be len(instructions) - 1
         indexToSplit = line.index(":")
         if " " in line[0:indexToSplit]:
             raise Exception(
