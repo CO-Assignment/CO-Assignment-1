@@ -67,7 +67,7 @@ for line in stdin:
                 )
 
             labels[line[0:indexToSplit]] = lineNo
-            instructions.append((line[indexToSplit + 1 :]).strip())
+            instructions.append((line[indexToSplit + 1:]).strip())
 
         elif "hlt" != line:
             raise Exception(
@@ -102,7 +102,7 @@ for line in stdin:
             )
 
         labels[line[0:indexToSplit]] = lineNo
-        instructions.append((line[indexToSplit + 1 :]).strip())
+        instructions.append((line[indexToSplit + 1:]).strip())
         continue
 
     instructions.append(line)
@@ -194,8 +194,9 @@ while j < len(realInstructions):
 
     # TypeE handling
     elif (
-        (curOp == "jmp") or (curOp == "jlt") or (curOp == "jgt") or (curOp == "je")
-    ) and checkE(i, j):
+        (curOp == "jmp") or (curOp == "jlt") or (curOp == "jgt")
+        or (curOp == "je")
+            ) and checkE(i, j):
         result = TypeE(i, currFlagState, j)
         if result[0] == -1:
             output.append(result[1])
