@@ -11,6 +11,8 @@ from definitions import (
 from helpers import convertToBin, convertToDecimal
 
 
+# the following functions are used to process a certain query of a given type as mentioned in the declaration of function.
+
 def TypeA(inst, j):
     toRet = ""
     partWise = inst
@@ -147,13 +149,13 @@ def checkTypeC(inst, j):
 
 def TypeC(inst, j):
 
-    if inst[0] == "mov":
+    if inst[0] == "mov":    # The following command helps in moving data from one register to another register.
         registerStored[inst[1]] = registerStored[inst[2]]
         return (
             opcodes[inst[0] + "R"] + ("0" * 5) + Register[inst[1]] + Register[inst[2]]
         )
 
-    elif inst[0] == "cmp":
+    elif inst[0] == "cmp":  # The following command compares two registers and stores it inside FLAGS register.
         reg1 = registerStored[inst[1]]
         reg2 = registerStored[inst[2]]
         if reg1 > reg2:
@@ -162,12 +164,12 @@ def TypeC(inst, j):
             flags[-3] = True
         else:
             flags[-1] = True
-    elif inst[0] == "div":
+    elif inst[0] == "div":  # the following command divides the vale of two registers and stores its quotient in R0 and remainder in R1.
         quotient = (registerStored[inst[1]]) // (registerStored[inst[2]])
         remainder = registerStored[inst[1]] % registerStored[inst[2]]
         registerStored["R0"] = quotient
         registerStored["R1"] = remainder
-    elif inst[0] == "not":
+    elif inst[0] == "not":  # The following command inverts the value in a given register.
 
         noToFlip = convertToBin(registerStored[inst[2]], 16)
 
@@ -183,6 +185,8 @@ def TypeC(inst, j):
         registerStored[inst[1]] = flippedNo
 
     return opcodes[inst[0]] + ("0" * 5) + Register[inst[1]] + Register[inst[2]]
+
+
 
 
 def TypeD(inst, j):
