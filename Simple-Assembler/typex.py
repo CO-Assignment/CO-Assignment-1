@@ -164,8 +164,8 @@ def TypeC(inst, j):
         else:
             flags[-1] = True
     elif inst[0] == "div":
-        quotient = (registerStored[inst[0]]) // (registerStored[inst[1]])
-        remainder = registerStored[inst[0]] % registerStored[inst[1]]
+        quotient = (registerStored[inst[1]]) // (registerStored[inst[2]])
+        remainder = registerStored[inst[1]] % registerStored[inst[2]]
         registerStored["R0"] = quotient
         registerStored["R1"] = remainder
     elif inst[0] == "not":
