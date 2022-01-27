@@ -3,6 +3,7 @@ from s_help import (convertToBin, convertToDecimal)
 
 
 def sTypeA(i):
+    """Function to handle Type A instructions"""
     opcode = i[0:5]
     dest_reg = i[7:10]
     reg1 = i[10:13]
@@ -44,6 +45,7 @@ def sTypeA(i):
 
 
 def sTypeB(i):
+    """Function to handle Type B instructions"""
     opcode = i[0:5]
     reg = i[5:8]
     immediate = convertToDecimal(i[8:])
@@ -64,6 +66,7 @@ def sTypeB(i):
 
 
 def sTypeC(i, currFlag):
+    """Function to handle Type C instructions"""
     opcode = i[0:5]
     reg1 = i[10:13]
     reg2 = i[13:]
@@ -105,6 +108,7 @@ def sTypeC(i, currFlag):
 
 
 def sTypeD(i):
+    """Function to handle Type D instructions"""
     opcode = i[0:5]
     reg = i[5:8]
     location = convertToDecimal(i[8:])
@@ -119,7 +123,7 @@ def sTypeD(i):
 
 
 def sTypeE(i, currFlag, progc):
-
+    """Function to handle Type E instructions"""
     opcode = i[0:5]
     location = convertToDecimal(i[8:])
     if(opcodes[opcode] == "jmp"):

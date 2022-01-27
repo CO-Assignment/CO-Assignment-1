@@ -1,5 +1,6 @@
 from definitions import registerStored, Register, variables, labels
 
+# Functions to check (and throw exceptions if needed) whether an instruction provided is valid or not.
 
 def checkA(inst, j):
     if len(inst) != 4:

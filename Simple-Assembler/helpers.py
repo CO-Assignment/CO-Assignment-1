@@ -1,4 +1,6 @@
+
 def convertToBin(numToCovert, noOfBits):
+    """Helper function to convert a number from base 10 to base 2 with padded zeros if needed"""
     if numToCovert == 0:
         return "0" * noOfBits
     ans = ""
@@ -13,7 +15,7 @@ def convertToBin(numToCovert, noOfBits):
 
 
 def decimalToBinary(n):
-    # print(n, "is the recieved binary")
+    """Helper function to convert a number from decimal to binary"""    
     return int(bin(n).replace("0b", ""))
 
 

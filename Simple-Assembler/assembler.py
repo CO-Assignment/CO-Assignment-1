@@ -13,7 +13,7 @@ from sys import stdin
 from checker import checkA, checkB, checkC, checkD, checkE
 
 varsDone = False
-# linecounter = 0
+
 hltReached = False
 tempLineNo = 0
 for line in stdin:
